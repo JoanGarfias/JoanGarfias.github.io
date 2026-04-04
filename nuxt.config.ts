@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   ssr: false,
   css: ['~/assets/css/main.css'],
   app: {
-    baseURL: '/JoanGarfias.github.io/',
+    baseURL: '/',
     buildAssetsDir: 'assets',
   },
   nitro: {
