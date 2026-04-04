@@ -13,7 +13,7 @@ import { Download as LucideDownload } from 'lucide-vue-next';
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-sky"></span>
         </span>
-        Disponible para nuevos proyectos
+        Construyendo productos y sistemas web
       </div>
       
       <h1 class="text-4xl sm:text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">
@@ -21,7 +21,7 @@ import { Download as LucideDownload } from 'lucide-vue-next';
       </h1>
 
       <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-        Soy un <span class="text-white font-medium">Desarrollador de Software</span> enfocado en crear experiencias interactivas y resolver problemas complejos con código elegante.
+        Soy un <span class="text-white font-medium">Desarrollador Full-stack</span>. Construyo aplicaciones web funcionales, desde el backend hasta la interfaz, enfocándome en que realmente resuelvan problemas.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
