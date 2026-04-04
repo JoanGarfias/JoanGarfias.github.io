@@ -30,8 +30,8 @@
         </div>
 
         <!-- Formulario con mejor contraste -->
-        <div class="lg:col-span-7">
-          <form @submit.prevent="handleSubmit" class="relative space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 -mx-2 sm:mx-0">
+        <div class="lg:col-span-7 w-full max-w-full">
+          <form @submit.prevent="handleSubmit" class="relative space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 w-full">
             <!-- Mensajes de Estado -->
             <Transition
               enter-active-class="transition duration-300 ease-out"
@@ -41,19 +41,19 @@
               leave-from-class="opacity-100 transform translate-y-0"
               leave-to-class="opacity-0 transform -translate-y-4"
             >
-              <div v-if="isSuccess" class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-xl text-sm font-medium flex items-center gap-3">
-                <LucideCheckCircle class="w-5 h-5" />
+              <div v-if="isSuccess" class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 p-4 rounded-xl text-sm font-bold flex items-center gap-3 shadow-lg shadow-emerald-500/10">
+                <LucideCheckCircle class="w-5 h-5 text-emerald-400" />
                 ¡Mensaje enviado con éxito! Me pondré en contacto pronto.
               </div>
-              <div v-else-if="error" class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm font-medium flex items-center gap-3">
-                <LucideAlertCircle class="w-5 h-5" />
+              <div v-else-if="error" class="bg-red-500/20 border border-red-500/30 text-red-300 p-4 rounded-xl text-sm font-bold flex items-center gap-3 shadow-lg shadow-red-500/10">
+                <LucideAlertCircle class="w-5 h-5 text-red-400" />
                 {{ error }}
               </div>
             </Transition>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
               <div class="space-y-2">
-                <label for="name" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Nombre completo</label>
+                <label for="name" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Nombre completo</label>
                 <input 
                   id="name"
                   v-model="form.name"
@@ -62,12 +62,12 @@
                   autocomplete="name"
                   required
                   placeholder="Ej. Juan Pérez" 
-                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                  class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
                   :disabled="isPending || isSuccess"
                 />
               </div>
               <div class="space-y-2">
-                <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Correo electrónico</label>
+                <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Correo electrónico</label>
                 <input 
                   id="email"
                   v-model="form.email"
@@ -76,13 +76,13 @@
                   autocomplete="email"
                   required
                   placeholder="tu@email.com" 
-                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50" 
+                  class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50" 
                   :disabled="isPending || isSuccess"
                 />
               </div>
             </div>
             <div class="space-y-4">
-              <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tu mensaje</label>
+              <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Tu mensaje</label>
               <textarea 
                 id="message"
                 v-model="form.message"
@@ -90,7 +90,7 @@
                 required
                 placeholder="Cuéntame sobre tu proyecto o idea..." 
                 rows="4" 
-                class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
                 :disabled="isPending || isSuccess"
               ></textarea>
             </div>
