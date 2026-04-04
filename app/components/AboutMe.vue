@@ -51,14 +51,14 @@
                 <div class="w-8 h-[1px] bg-primary/40"></div>
                 <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-200">Filosofía</h4>
               </div>
-              <p class="text-sm text-slate-500 leading-relaxed">Priorizo la claridad, el rendimiento y la experiencia del usuario sobre las tendencias pasajeras.</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Prefiero hacer las cosas claras y bien hechas, antes que seguir tendencias solo porque sí.</p>
             </div>
             <div class="space-y-4">
               <div class="flex items-center gap-3">
                 <div class="w-8 h-[1px] bg-cyan-400/40"></div>
                 <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-200">Intereses</h4>
               </div>
-              <p class="text-sm text-slate-500 leading-relaxed">Amante de la música, el deporte y el aprendizaje continuo en entornos colaborativos.</p>
+              <p class="text-sm text-slate-500 leading-relaxed">Me gusta la música, especialmente el beatbox, y ver fútbol desde la parte táctica. También disfruto aprender y trabajar en equipo.</p>
             </div>
           </div>
         </div>
