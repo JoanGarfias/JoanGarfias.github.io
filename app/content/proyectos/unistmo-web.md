@@ -17,7 +17,7 @@ images:
   - /projects/unistmo/4.png
   - /projects/unistmo/5.png
   - /projects/unistmo/6.png
-demo: https://unistmo.edu.mx # Ejemplo de demo
+demo: https://www2.unistmo.edu.mx
 ---
 
 ## Contexto

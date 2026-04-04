@@ -14,7 +14,7 @@ images:
   - /projects/euphoria/3.png
   - /projects/euphoria/4.png
   - /projects/euphoria/5.png
-demo: https://euphoria.joangarfias.com # Ejemplo de demo
+demo: https://euphoria-web.pages.dev
 ---
 
 ## Contexto

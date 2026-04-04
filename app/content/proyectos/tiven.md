@@ -14,7 +14,7 @@ images:
   - /projects/tiven/1.png
   - /projects/tiven/2.png
   - /projects/tiven/3.png
-demo: https://tiven.com # Ejemplo de demo
+demo: https://tiven.app
 ---
 
 ## Contexto
