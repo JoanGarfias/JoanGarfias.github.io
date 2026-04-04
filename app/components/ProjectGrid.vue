@@ -72,5 +72,10 @@
 
 <script setup>
 import { ArrowRight as LucideArrowRight } from 'lucide-vue-next'
-const { projects } = useProjects()
+const { getAllProjects } = useProjects()
+const projects = ref([])
+
+onMounted(async () => {
+  projects.value = await getAllProjects()
+})
 </script>

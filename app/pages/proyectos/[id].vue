@@ -9,9 +9,9 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
         <!-- Main Content -->
         <div class="lg:col-span-8 space-y-20">
-          <header class="space-y-8">
-            <div class="flex items-center gap-4">
-              <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">0{{ projects.findIndex(p => p.id === project.id) + 1 }}</span>
+            <header class="space-y-8">
+            <div v-if="project" class="flex items-center gap-4">
+              <span class="text-[10px] font-black uppercase tracking-[0.3em] text-primary">Detalles del Proyecto</span>
               <div class="h-[1px] flex-grow bg-white/5"></div>
               <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">{{ project.period }}</span>
             </div>
@@ -46,11 +46,17 @@
 
           <section class="space-y-10">
             <h2 class="text-xs font-black uppercase tracking-[0.4em] text-slate-500">Sobre el proyecto</h2>
-            <div class="prose prose-invert prose-lg max-w-none">
-              <p class="text-slate-400 leading-loose text-lg">{{ project.fullDescription }}</p>
+            <div 
+              v-if="project"
+              class="prose prose-invert prose-blue prose-lg max-w-none 
+                     prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:italic
+                     prose-p:text-slate-400 prose-p:leading-loose prose-p:text-lg 
+                     prose-strong:text-white prose-strong:font-bold" 
+              v-html="project.content">
             </div>
           </section>
 
+          <!-- Gallery -->
           <section v-if="project.images.length > 1" class="space-y-12">
             <h2 class="text-xs font-black uppercase tracking-[0.4em] text-slate-500">Galería de Proceso</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -60,12 +66,33 @@
               </div>
             </div>
           </section>
+
+          <!-- Project Actions (Demo / Code) -->
+          <section v-if="project.demo || project.github" class="pt-16 border-t border-white/10 flex flex-wrap gap-6">
+            <div v-if="project.demo" class="space-y-4">
+              <h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Prueba el proyecto</h3>
+              <a :href="project.demo" target="_blank" 
+                class="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-white hover:text-black transition-all shadow-xl shadow-primary/20">
+                Ver Demo En Vivo
+                <LucideExternalLink class="w-4 h-4" />
+              </a>
+            </div>
+
+            <div v-if="project.github" class="space-y-4">
+              <h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Código fuente</h3>
+              <a :href="project.github" target="_blank" 
+                class="inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 text-white text-xs font-black uppercase tracking-[0.2em] rounded-xl hover:bg-white hover:text-black transition-all">
+                Ver Repositorio
+                <LucideGithub class="w-4 h-4" />
+              </a>
+            </div>
+          </section>
         </div>
 
         <!-- Sidebar / Metadata -->
         <aside class="lg:col-span-4 space-y-16">
           <div class="sticky top-32 space-y-12">
-            <div class="space-y-8 p-10 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-sm">
+            <div v-if="projectInfo" class="space-y-8 p-10 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-sm">
               <div v-for="(val, key) in projectInfo" :key="key" class="space-y-1">
                 <span class="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-black">{{ key }}</span>
                 <span class="text-lg text-slate-100 font-bold block">{{ val }}</span>
@@ -82,7 +109,7 @@
               </div>
 
               <!-- Team -->
-              <div v-if="project.teamSize > 1" class="pt-8 border-t border-white/10 space-y-6">
+              <div v-if="project.teamSize && project.teamSize > 1" class="pt-8 border-t border-white/10 space-y-6">
                 <div class="flex items-center justify-between">
                   <span class="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-black">Colaboradores</span>
                   <span class="text-xs font-bold text-slate-400">{{ project.teamSize }} per.</span>
@@ -93,12 +120,6 @@
                     {{ collab }}
                   </span>
                 </div>
-              </div>
-              
-              <div v-if="project.link" class="pt-8">
-                <a :href="project.link" target="_blank" class="flex items-center justify-center gap-2 w-full py-4 bg-white text-black text-xs font-black uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-all shadow-xl shadow-black/20">
-                  Visitar sitio <LucideArrowRight class="w-4 h-4" />
-                </a>
               </div>
             </div>
             
@@ -120,39 +141,51 @@
 import { 
   ArrowLeft as LucideArrowLeft,
   ArrowRight as LucideArrowRight,
-  ChevronLeft as LucideChevronLeft,
-  ChevronRight as LucideChevronRight,
+  ExternalLink as LucideExternalLink,
+  Github as LucideGithub,
   User as LucideUser
 } from 'lucide-vue-next'
 
 const route = useRoute()
-const { getProjectById, projects } = useProjects()
-const project = getProjectById(route.params.id)
+const { getProjectById } = useProjects()
 
-if (project) {
-  useHead({
-    title: `${project.title} | Proyecto de Joan Garfias`,
-    meta: [
-      { name: 'description', content: project.description },
-      // Open Graph
-      { property: 'og:title', content: `${project.title} | Joan Garfias` },
-      { property: 'og:description', content: project.description },
-      { property: 'og:image', content: project.images && project.images.length > 0 ? project.images[0] : 'https://joangarfias.com/og-image.png' },
-      // Twitter
-      { property: 'twitter:title', content: `${project.title} | Joan Garfias` },
-      { property: 'twitter:description', content: project.description },
-    ]
-  })
+const project = ref(null)
+const activeImage = ref(0)
+
+onMounted(async () => {
+  project.value = await getProjectById(route.params.id)
+  
+  if (project.value) {
+    useHead({
+      title: `${project.value.title} | Proyecto de Joan Garfias`,
+      meta: [
+        { name: 'description', content: project.value.description },
+        { property: 'og:title', content: `${project.value.title} | Joan Garfias` },
+        { property: 'og:description', content: project.value.description },
+        { property: 'og:image', content: project.value.images && project.value.images.length > 0 ? project.value.images[0] : 'https://joangarfias.com/og-image.png' },
+      ]
+    })
+  }
+})
+
+const next = () => {
+  if (project.value) {
+    activeImage.value = (activeImage.value + 1) % project.value.images.length
+  }
+}
+const prev = () => {
+  if (project.value) {
+    activeImage.value = (activeImage.value - 1 + project.value.images.length) % project.value.images.length
+  }
 }
 
-const activeImage = ref(0)
-const next = () => activeImage.value = (activeImage.value + 1) % project.images.length
-const prev = () => activeImage.value = (activeImage.value - 1 + project.images.length) % project.images.length
-
-const projectInfo = computed(() => ({
-  'Periodo': project.period,
-  'Equipo': project.team,
-  'Rol': project.role,
-  'Ubicación': project.location
-}))
+const projectInfo = computed(() => {
+  if (!project.value) return null
+  return {
+    'Periodo': project.value.period,
+    'Equipo': project.value.team,
+    'Rol': project.value.role,
+    'Ubicación': project.value.location
+  }
+})
 </script>
