@@ -29,15 +29,18 @@
 
           <div class="space-y-8 max-w-xl">
             <p class="text-lg md:text-xl text-slate-200 leading-relaxed font-light italic">
-              "Mi camino en la tecnología comenzó con la curiosidad de entender cómo funcionan las cosas, y evolucionó en la pasión por crear herramientas que resuelvan problemas reales."
+              "Empecé en tecnología por simple curiosidad: quería entender cómo funcionaban las cosas. Con el tiempo, eso se convirtió en el gusto por construir soluciones que sí le sirvan a alguien."
             </p>
 
             <div class="space-y-6 text-slate-300 text-base md:text-lg leading-loose">
               <p>
-                Soy un desarrollador que encuentra el equilibrio entre la estética y la funcionalidad. No creo en soluciones genéricas; creo en entender el contexto antes de escribir la primera línea de código.
+                Soy desarrollador y me importa tanto cómo se ve algo como cómo funciona. Antes de escribir código, prefiero entender bien el problema y el contexto; eso suele evitar soluciones innecesarias.
               </p>
               <p>
-                Cuando no estoy frente a la pantalla optimizando flujos de datos o refinando interfaces, me gusta explorar el ritmo a través del <span class="text-white font-bold underline decoration-primary/30 underline-offset-4">beatbox</span> o la estrategia en el fútbol. Creo firmemente que la creatividad fuera del código es lo que alimenta la innovación dentro de él.
+                He trabajado en proyectos reales (aunque pequeños), donde me ha tocado tanto construir desde cero como resolver errores y tomar decisiones sobre cómo organizar todo.
+              </p>
+              <p>
+                Fuera del código, me gusta el <span class="text-white font-bold underline decoration-primary/30 underline-offset-4">beatbox</span> y el fútbol. Son cosas que, aunque no tengan que ver directamente con programar, me ayudan a mantener la cabeza fresca y a pensar diferente.
               </p>
             </div>
           </div>
