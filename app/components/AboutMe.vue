@@ -21,23 +21,23 @@
         <div class="lg:col-span-7 space-y-12">
           <header class="space-y-6">
             <span class="text-[10px] font-black uppercase tracking-[0.4em] text-primary/80">Trayectoria & Enfoque</span>
-            <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] italic uppercase">
+            <h2 class="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] italic uppercase">
               Construyendo <br/> 
-              <span class="text-slate-500">con propósito.</span>
+              <span class="text-slate-400">con propósito.</span>
             </h2>
           </header>
 
           <div class="space-y-8 max-w-xl">
-            <p class="text-xl text-slate-300 leading-relaxed font-light italic">
+            <p class="text-lg md:text-xl text-slate-200 leading-relaxed font-light italic">
               "Mi camino en la tecnología comenzó con la curiosidad de entender cómo funcionan las cosas, y evolucionó en la pasión por crear herramientas que resuelvan problemas reales."
             </p>
 
-            <div class="space-y-6 text-slate-400 text-lg leading-loose">
+            <div class="space-y-6 text-slate-300 text-base md:text-lg leading-loose">
               <p>
                 Soy un desarrollador que encuentra el equilibrio entre la estética y la funcionalidad. No creo en soluciones genéricas; creo en entender el contexto antes de escribir la primera línea de código.
               </p>
               <p>
-                Cuando no estoy frente a la pantalla optimizando flujos de datos o refinando interfaces, me gusta explorar el ritmo a través del <span class="text-white font-bold">beatbox</span> o la estrategia en el fútbol. Creo firmemente que la creatividad fuera del código es lo que alimenta la innovación dentro de él.
+                Cuando no estoy frente a la pantalla optimizando flujos de datos o refinando interfaces, me gusta explorar el ritmo a través del <span class="text-white font-bold underline decoration-primary/30 underline-offset-4">beatbox</span> o la estrategia en el fútbol. Creo firmemente que la creatividad fuera del código es lo que alimenta la innovación dentro de él.
               </p>
             </div>
           </div>

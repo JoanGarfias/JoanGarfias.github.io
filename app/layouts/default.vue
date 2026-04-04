@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30">
+  <div class="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500/30 overflow-x-hidden">
     <Header />
-    <main>
+    <main class="overflow-x-hidden">
       <slot />
     </main>
     <Footer />

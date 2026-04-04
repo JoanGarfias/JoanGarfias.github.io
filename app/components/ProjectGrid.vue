@@ -1,7 +1,7 @@
 <template>
   <section id="proyectos" class="py-20">
     <div class="mb-20 text-center">
-      <h2 class="text-5xl md:text-7xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">Proyectos</h2>
+      <h2 class="text-4xl sm:text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">Proyectos</h2>
       <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
         Una selección de trabajos donde combino diseño, tecnología y resolución de problemas para crear experiencias digitales únicas.
       </p>
@@ -12,7 +12,7 @@
       <div 
         v-for="(project, index) in projects" 
         :key="project.id" 
-        class="group relative flex flex-col"
+        class="group relative flex flex-col p-4 md:p-0 rounded-3xl bg-white/5 md:bg-transparent border border-white/5 md:border-none transition-all duration-500"
       >
         <!-- Project Card -->
         <NuxtLink 

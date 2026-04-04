@@ -16,7 +16,7 @@ import { Download as LucideDownload } from 'lucide-vue-next';
         Disponible para nuevos proyectos
       </div>
       
-      <h1 class="text-5xl md:text-7xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">
+      <h1 class="text-4xl sm:text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">
           Hola, soy <span class="bg-gradient-to-r from-sky to-cyan-400 bg-clip-text text-transparent">Joan Garfias</span>.
       </h1>
 
