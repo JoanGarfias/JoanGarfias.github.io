@@ -31,30 +31,53 @@
 
         <!-- Formulario con mejor contraste -->
         <div class="lg:col-span-7">
-          <form @submit.prevent class="space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 -mx-2 sm:mx-0">
+          <form @submit.prevent="handleSubmit" class="relative space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 -mx-2 sm:mx-0">
+            <!-- Mensajes de Estado -->
+            <Transition
+              enter-active-class="transition duration-300 ease-out"
+              enter-from-class="opacity-0 transform -translate-y-4"
+              enter-to-class="opacity-100 transform translate-y-0"
+              leave-active-class="transition duration-200 ease-in"
+              leave-from-class="opacity-100 transform translate-y-0"
+              leave-to-class="opacity-0 transform -translate-y-4"
+            >
+              <div v-if="isSuccess" class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-xl text-sm font-medium flex items-center gap-3">
+                <LucideCheckCircle class="w-5 h-5" />
+                ¡Mensaje enviado con éxito! Me pondré en contacto pronto.
+              </div>
+              <div v-else-if="error" class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl text-sm font-medium flex items-center gap-3">
+                <LucideAlertCircle class="w-5 h-5" />
+                {{ error }}
+              </div>
+            </Transition>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-              <div class="space-y-4">
+              <div class="space-y-2">
                 <label for="name" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Nombre completo</label>
                 <input 
                   id="name"
+                  v-model="form.name"
                   type="text" 
                   name="name"
                   autocomplete="name"
                   required
                   placeholder="Ej. Juan Pérez" 
-                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4" 
+                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                  :disabled="isPending || isSuccess"
                 />
               </div>
-              <div class="space-y-4">
+              <div class="space-y-2">
                 <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Correo electrónico</label>
                 <input 
                   id="email"
+                  v-model="form.email"
                   type="email" 
                   name="email"
                   autocomplete="email"
                   required
                   placeholder="tu@email.com" 
-                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4" 
+                  class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50" 
+                  :disabled="isPending || isSuccess"
                 />
               </div>
             </div>
@@ -62,16 +85,37 @@
               <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tu mensaje</label>
               <textarea 
                 id="message"
+                v-model="form.message"
                 name="message"
                 required
                 placeholder="Cuéntame sobre tu proyecto o idea..." 
                 rows="4" 
-                class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4"
+                class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                :disabled="isPending || isSuccess"
               ></textarea>
             </div>
-            <button type="submit" class="group flex items-center justify-center gap-3 w-full py-4 md:py-5 bg-slate-100 text-slate-950 md:bg-slate-900 md:text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl md:hover:bg-primary md:hover:text-white transition-all duration-300 shadow-xl" aria-label="Enviar mensaje de contacto">
-              Enviar Propuesta
-              <LucideMail class="w-4 h-4 transition-transform md:group-hover:translate-x-1" />
+
+            <!-- Honeypot/Lock field -->
+            <input type="text" v-model="form.lock" name="lock" class="hidden" aria-hidden="true" />
+
+            <button 
+              type="submit" 
+              :disabled="isPending || isSuccess"
+              class="group flex items-center justify-center gap-3 w-full py-4 md:py-5 bg-slate-100 text-slate-950 md:bg-slate-900 md:text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl md:hover:bg-primary md:hover:text-white transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed" 
+              aria-label="Enviar mensaje de contacto"
+            >
+              <template v-if="isPending">
+                Enviando...
+                <LucideLoader2 class="w-4 h-4 animate-spin" />
+              </template>
+              <template v-else-if="isSuccess">
+                ¡Enviado!
+                <LucideCheckCircle class="w-4 h-4 text-emerald-500" />
+              </template>
+              <template v-else>
+                Enviar Propuesta
+                <LucideMail class="w-4 h-4 transition-transform md:group-hover:translate-x-1" />
+              </template>
             </button>
           </form>
         </div>
@@ -81,7 +125,40 @@
 </template>
 
 <script setup>
-import { Github as LucideGithub, Linkedin as LucideLinkedin, Twitter as LucideTwitter, Mail as LucideMail, LucideYoutube } from 'lucide-vue-next'
+import { Github as LucideGithub, Linkedin as LucideLinkedin, Twitter as LucideTwitter, Mail as LucideMail, LucideYoutube, LucideCheckCircle, LucideAlertCircle, LucideLoader2 } from 'lucide-vue-next'
+import { useContact } from '../composables/useContact'
+
+const { isPending, isSuccess, error, sendEmail, resetStatus } = useContact()
+
+const form = ref({
+  name: '',
+  email: '',
+  message: '',
+  lock: 'this-is-a-valid-frontend-request' // Se enviará como cadena oculta
+})
+
+const handleSubmit = async () => {
+  // Validación básica adicional de email antes de enviar
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(form.value.email)) {
+    return
+  }
+
+  await sendEmail({ ...form.value })
+
+  if (isSuccess.value) {
+    // Limpiar formulario tras éxito después de unos segundos o mantenerlo bloqueado
+    setTimeout(() => {
+      form.value = {
+        name: '',
+        email: '',
+        message: '',
+        lock: 'this-is-a-valid-frontend-request'
+      }
+      resetStatus()
+    }, 5000)
+  }
+}
 
 const socials = [
   { label: 'LinkedIn', value: 'joangarfias', link: 'https://linkedin.com/in/joangarfias', icon: LucideLinkedin, color: 'text-blue-400' },
