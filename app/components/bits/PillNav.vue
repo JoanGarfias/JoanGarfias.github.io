@@ -349,16 +349,16 @@ const isActive = (href?: string) => {
         :style="{
           width: 'var(--nav-h)',
           height: 'var(--nav-h)',
-          background: 'var(--base, #000)'
+          background: 'var(--pill-bg, #000)'
         }"
       >
         <span
           class="rounded w-4 h-0.5 origin-center transition-all duration-[10ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hamburger-line"
-          :style="{ background: 'var(--pill-bg, #fff)' }"
+          :style="{ background: 'var(--pill-text, #fff)' }"
         />
         <span
           class="rounded w-4 h-0.5 origin-center transition-all duration-[10ms] ease-[cubic-bezier(0.25,0.1,0.25,1)] hamburger-line"
-          :style="{ background: 'var(--pill-bg, #fff)' }"
+          :style="{ background: 'var(--pill-text, #fff)' }"
         />
       </button>
     </nav>
