@@ -70,12 +70,12 @@
 </template>
 
 <script setup>
-import { Github as LucideGithub, Linkedin as LucideLinkedin, Twitter as LucideTwitter, Mail as LucideMail } from 'lucide-vue-next'
+import { Github as LucideGithub, Linkedin as LucideLinkedin, Twitter as LucideTwitter, Mail as LucideMail, LucideYoutube } from 'lucide-vue-next'
 
 const socials = [
   { label: 'LinkedIn', value: 'joangarfias', link: 'https://linkedin.com/in/joangarfias', icon: LucideLinkedin, color: 'text-blue-400' },
   { label: 'Github', value: 'JoanGarfias', link: 'https://github.com/JoanGarfias', icon: LucideGithub, color: 'text-slate-400' },
-  { label: 'YouTube', value: 'joan_dev', link: 'https://youtube.com/@joan_dev', icon: LucideTwitter, color: 'text-sky-400' },
+  { label: 'YouTube', value: 'joan_dev', link: 'https://youtube.com/@joan_dev', icon: LucideYoutube, color: 'text-sky-400' },
   { label: 'Email', value: 'Escríbeme un correo', link: 'mailto:joanpagarfk@gmail.com', icon: LucideMail, color: 'text-emerald-400' }
 ]
 </script>
