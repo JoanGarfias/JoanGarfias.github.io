@@ -42,6 +42,28 @@
     "location": "Oaxaca de Juárez, México"
   },
   {
+    "id": "unistmo-web",
+    "title": "Universidad del Istmo - Sitio web",
+    "description": "Sitio web oficial de la Universidad del Istmo.",
+    "fullDescription": "Este es mi proyecto más reciente y actualmente en curso. Consiste en el desarrollo del sitio web oficial de la Universidad del Istmo, una institución educativa reconocida en México. El proyecto implica la creación de una plataforma web moderna y funcional que refleje la identidad de la universidad, proporcionando información relevante sobre sus programas académicos, eventos, noticias y recursos para estudiantes y profesores. Estoy trabajando en colaboración con un equipo de desarrollo para garantizar que el sitio web sea accesible, fácil de navegar y visualmente atractivo, utilizando tecnologías modernas para ofrecer una experiencia de usuario excepcional. Inicialmente, el proyecto comenzó con el levantamiento de rquerimientos, posteriormente se hizo un análisis de los mismos y se definió la arquitectura del sistema, para luego pasar a la fase de desarrollo, donde estoy involucrado en la implementación tanto del frontend como del backend, asegurando que el sitio web cumpla con los estándares de calidad y rendimiento esperados. Lo que actualmente se muestra en las imágenes es una versión inicial. El sitio web está construido con AstroJS, manteniendo un enfoque puramente estático con Static Site Generation (SSG) para garantizar un rendimiento óptimo y una experiencia de usuario fluida. El diseño del sitio web se basa en Tailwind CSS, lo que permite una personalización rápida y eficiente, asegurando que el sitio sea visualmente atractivo y coherente con la identidad de la universidad. Este proyecto es un ejemplo de mi capacidad para trabajar en proyectos complejos y colaborativos, aplicando mis habilidades en desarrollo web y gestión de proyectos para entregar una solución de alta calidad. Actualmente me encuentro integrando un CMS (Strapi) para facilitar la gestión de contenidos por parte del equipo de la universidad, lo que permitirá una actualización constante y eficiente del sitio web sin necesidad de intervención técnica directa, así como el despliegue del sistema haciendo uso de CI/CD.",
+    "image": "/projects/unistmo/1.png",
+    "images": [
+      "/projects/unistmo/1.png",
+      "/projects/unistmo/2.png",
+      "/projects/unistmo/3.png",
+      "/projects/unistmo/4.png",
+      "/projects/unistmo/5.png",
+      "/projects/unistmo/6.png"
+    ],
+    "period": "Enero de 2026 - Actualidad",
+    "team": "Colaborativo",
+    "teamSize": 7,
+    "collaborators": ["Joan Garfias", "Karla G.", "Jeremy O.", "Juan E.", "Sadie B.", "Joshua H.", "Orlando C."],
+    "role": "Fullstack Developer",
+    "technologies": ["AstroJS", "Tailwind CSS", "PostgreSQL", "Strapi CMS","Docker", "Docker Compose"],
+    "location": "Oaxaca de Juárez, México"
+  },
+  {
     "id": "euphoria",
     "title": "Salón de Belleza Euphoria",
     "description": "Una aplicación que permite que el salón tenga una presencia digital, participación y seguimiento activo de sus clientes.",
