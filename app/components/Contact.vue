@@ -34,31 +34,42 @@
           <form @submit.prevent class="space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 -mx-2 sm:mx-0">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
               <div class="space-y-4">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Nombre completo</label>
+                <label for="name" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Nombre completo</label>
                 <input 
+                  id="name"
                   type="text" 
+                  name="name"
+                  autocomplete="name"
+                  required
                   placeholder="Ej. Juan Pérez" 
                   class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4" 
                 />
               </div>
               <div class="space-y-4">
-                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Correo electrónico</label>
+                <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Correo electrónico</label>
                 <input 
+                  id="email"
                   type="email" 
+                  name="email"
+                  autocomplete="email"
+                  required
                   placeholder="tu@email.com" 
                   class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4" 
                 />
               </div>
             </div>
             <div class="space-y-4">
-              <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tu mensaje</label>
+              <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Tu mensaje</label>
               <textarea 
+                id="message"
+                name="message"
+                required
                 placeholder="Cuéntame sobre tu proyecto o idea..." 
                 rows="4" 
                 class="w-full bg-transparent border-b-2 border-slate-700 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-600 text-white font-bold text-base md:text-lg py-3 md:py-4"
               ></textarea>
             </div>
-            <button class="group flex items-center justify-center gap-3 w-full py-4 md:py-5 bg-slate-100 text-slate-950 md:bg-slate-900 md:text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl md:hover:bg-primary md:hover:text-white transition-all duration-300 shadow-xl">
+            <button type="submit" class="group flex items-center justify-center gap-3 w-full py-4 md:py-5 bg-slate-100 text-slate-950 md:bg-slate-900 md:text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl md:hover:bg-primary md:hover:text-white transition-all duration-300 shadow-xl" aria-label="Enviar mensaje de contacto">
               Enviar Propuesta
               <LucideMail class="w-4 h-4 transition-transform md:group-hover:translate-x-1" />
             </button>

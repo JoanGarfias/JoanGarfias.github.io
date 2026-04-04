@@ -25,18 +25,19 @@ import { Download as LucideDownload } from 'lucide-vue-next';
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
-        <NuxtLink to="/proyectos" class="group relative w-full sm:w-auto px-10 py-4 bg-sky text-slate-950 font-bold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-sky/30">
+        <NuxtLink to="/proyectos" class="group relative w-full sm:w-auto px-10 py-4 bg-sky text-slate-950 font-bold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-sky/30" aria-label="Ver mis proyectos destacados">
           <span class="relative z-10">Ver Proyectos</span>
           <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
         </NuxtLink>
         
-        <NuxtLink to="/contacto" class="w-full sm:w-auto px-10 py-4 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 text-white font-bold rounded-2xl transition-all duration-300 backdrop-blur-sm">
+        <NuxtLink to="/contacto" class="w-full sm:w-auto px-10 py-4 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 text-white font-bold rounded-2xl transition-all duration-300 backdrop-blur-sm" aria-label="Ir a la página de contacto">
           Contáctame
         </NuxtLink>
         
         <a href="/cv.pdf" 
            download="CV_Joan_Garfias.pdf"
-           class="cursor-pointer group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 font-bold rounded-2xl hover:bg-cyan-500/10 hover:border-cyan-500/40 transition-all duration-300">
+           class="cursor-pointer group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 font-bold rounded-2xl hover:bg-cyan-500/10 hover:border-cyan-500/40 transition-all duration-300"
+           aria-label="Descargar mi Currículum Vitae en PDF">
           <LucideDownload class="w-5 h-5 group-hover:animate-bounce" />
           <span>Descargar CV</span>
         </a>

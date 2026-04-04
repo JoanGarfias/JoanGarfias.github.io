@@ -10,7 +10,7 @@
         <!-- Columna Marca -->
         <div class="space-y-6">
           <div class="flex items-center gap-2">
-            <img src="/logo.svg" alt="Joan Garfias Logo" class="w-8 h-8">
+            <img src="/logo.svg" alt="" role="presentation" class="w-8 h-8">
             <span class="text-xl font-bold tracking-tight text-white italic">Joan Garfias</span>
           </div>
           <p class="text-slate-400 text-sm leading-relaxed max-w-xs">

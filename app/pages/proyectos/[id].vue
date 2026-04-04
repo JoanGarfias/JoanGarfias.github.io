@@ -129,6 +129,22 @@ const route = useRoute()
 const { getProjectById, projects } = useProjects()
 const project = getProjectById(route.params.id)
 
+if (project) {
+  useHead({
+    title: `${project.title} | Proyecto de Joan Garfias`,
+    meta: [
+      { name: 'description', content: project.description },
+      // Open Graph
+      { property: 'og:title', content: `${project.title} | Joan Garfias` },
+      { property: 'og:description', content: project.description },
+      { property: 'og:image', content: project.images && project.images.length > 0 ? project.images[0] : 'https://joangarfias.com/og-image.png' },
+      // Twitter
+      { property: 'twitter:title', content: `${project.title} | Joan Garfias` },
+      { property: 'twitter:description', content: project.description },
+    ]
+  })
+}
+
 const activeImage = ref(0)
 const next = () => activeImage.value = (activeImage.value + 1) % project.images.length
 const prev = () => activeImage.value = (activeImage.value - 1 + project.images.length) % project.images.length
