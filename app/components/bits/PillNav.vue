@@ -263,11 +263,9 @@ const isActive = (href?: string) => {
       aria-label="Primary"
       :style="cssVars"
     >
-      <component
-        :is="isRouterLink(items?.[0]?.href) ? 'RouterLink' : 'a'"
-        :to="isRouterLink(items?.[0]?.href) ? items[0].href : undefined"
-        :href="!isRouterLink(items?.[0]?.href) ? items?.[0]?.href || '#' : undefined"
-        aria-label="Home"
+      <NuxtLink
+        to="/"
+        aria-label="Ir al inicio"
         role="menuitem"
         ref="logoRef"
         class="inline-flex justify-center items-center p-2 rounded-full overflow-hidden"
@@ -279,7 +277,7 @@ const isActive = (href?: string) => {
         @mouseenter="handleLogoEnter"
       >
         <img :src="logo" :alt="logoAlt" ref="logoImgRef" class="block w-full h-full object-cover" />
-      </component>
+      </NuxtLink>
 
       <div
         ref="navItemsRef"
@@ -291,53 +289,53 @@ const isActive = (href?: string) => {
       >
         <ul role="menubar" class="flex items-stretch m-0 p-[3px] h-full list-none" :style="{ gap: 'var(--pill-gap)' }">
           <li v-for="(item, i) in items" :key="item.href || `item-${i}`" class="flex h-full" role="none">
-            <component
-              :is="isRouterLink(item.href) ? 'RouterLink' : 'a'"
-              :to="isRouterLink(item.href) ? item.href : undefined"
-              :href="!isRouterLink(item.href) ? item.href : undefined"
-              class="inline-flex box-border relative justify-center items-center px-0 rounded-full h-full overflow-hidden font-semibold text-[16px] no-underline uppercase leading-[0] tracking-[0.2px] whitespace-nowrap cursor-pointer"
-              :style="{
-                background: 'var(--pill-bg, #fff)',
-                color: 'var(--pill-text, var(--base, #000))',
-                paddingLeft: 'var(--pill-pad-x)',
-                paddingRight: 'var(--pill-pad-x)'
-              }"
-              :aria-label="item.ariaLabel || item.label"
-              @mouseenter="handleEnter(i)"
-              @mouseleave="handleLeave(i)"
-              @click="isMobileMenuOpen = false"
-            >
-              <span
-                class="block bottom-0 left-1/2 z-[1] absolute rounded-full pointer-events-none hover-circle"
+            <template v-if="item.href">
+              <NuxtLink
+                :to="item.href"
+                class="inline-flex box-border relative justify-center items-center px-0 rounded-full h-full overflow-hidden font-semibold text-[16px] no-underline uppercase leading-[0] tracking-[0.2px] whitespace-nowrap cursor-pointer"
                 :style="{
-                  background: 'var(--base, #000)',
-                  willChange: 'transform'
+                  background: 'var(--pill-bg, #fff)',
+                  color: 'var(--pill-text, var(--base, #000))',
+                  paddingLeft: 'var(--pill-pad-x)',
+                  paddingRight: 'var(--pill-pad-x)'
                 }"
-                aria-hidden="true"
-                :ref="el => setCircleRef(el as HTMLSpanElement, i)"
-              />
-              <span class="inline-block z-[2] relative leading-[1] label-stack">
-                <span class="inline-block z-[2] relative leading-[1] pill-label" :style="{ willChange: 'transform' }">
-                  {{ item.label }}
-                </span>
+                :aria-label="item.ariaLabel || item.label"
+                @mouseenter="handleEnter(i)"
+                @mouseleave="handleLeave(i)"
+                @click="isMobileMenuOpen = false"
+              >
                 <span
-                  class="inline-block top-0 left-0 z-[3] absolute pill-label-hover"
+                  class="block bottom-0 left-1/2 z-[1] absolute rounded-full pointer-events-none hover-circle"
                   :style="{
-                    color: 'var(--hover-text, #fff)',
-                    willChange: 'transform, opacity'
+                    background: 'var(--base, #000)',
+                    willChange: 'transform'
                   }"
                   aria-hidden="true"
-                >
-                  {{ item.label }}
+                  :ref="el => setCircleRef(el as HTMLSpanElement, i)"
+                />
+                <span class="inline-block z-[2] relative leading-[1] label-stack">
+                  <span class="inline-block z-[2] relative leading-[1] pill-label" :style="{ willChange: 'transform' }">
+                    {{ item.label }}
+                  </span>
+                  <span
+                    class="inline-block top-0 left-0 z-[3] absolute pill-label-hover"
+                    :style="{
+                      color: 'var(--hover-text, #fff)',
+                      willChange: 'transform, opacity'
+                    }"
+                    aria-hidden="true"
+                  >
+                    {{ item.label }}
+                  </span>
                 </span>
-              </span>
-              <span
-                v-if="isActive(item.href)"
-                class="-bottom-[6px] left-1/2 z-[4] absolute rounded-full w-3 h-3 -translate-x-1/2"
-                :style="{ background: 'var(--sky, #2563EB)' }"
-                aria-hidden="true"
-              />
-            </component>
+                <span
+                  v-if="isActive(item.href)"
+                  class="-bottom-[6px] left-1/2 z-[4] absolute rounded-full w-3 h-3 -translate-x-1/2"
+                  :style="{ background: 'var(--sky, #2563EB)' }"
+                  aria-hidden="true"
+                />
+              </NuxtLink>
+            </template>
           </li>
         </ul>
       </div>
@@ -375,28 +373,28 @@ const isActive = (href?: string) => {
     >
       <ul class="flex flex-col gap-[3px] m-0 p-[3px] list-none">
         <li v-for="item in items" :key="item.href || `mobile-${item.label}`">
-          <component
-            :is="isRouterLink(item.href) ? 'RouterLink' : 'a'"
-            :to="isRouterLink(item.href) ? item.href : undefined"
-            :href="!isRouterLink(item.href) ? item.href : undefined"
-            class="block px-4 py-3 rounded-[50px] font-medium text-[16px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
-            :style="{ background: 'var(--pill-bg, #fff)', color: 'var(--pill-text, #fff)' }"
-            @click="toggleMobileMenu"
-            @mouseenter="
-              (e: MouseEvent) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = 'var(--base)';
-                (e.currentTarget as HTMLAnchorElement).style.color = 'var(--hover-text, #fff)';
-              }
-            "
-            @mouseleave="
-              (e: MouseEvent) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = 'var(--pill-bg, #fff)';
-                (e.currentTarget as HTMLAnchorElement).style.color = 'var(--pill-text, #fff)';
-              }
-            "
-          >
-            {{ item.label }}
-          </component>
+          <template v-if="item.href">
+            <NuxtLink
+              :to="item.href"
+              class="block px-4 py-3 rounded-[50px] font-medium text-[16px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+              :style="{ background: 'var(--pill-bg, #fff)', color: 'var(--pill-text, #fff)' }"
+              @click="toggleMobileMenu"
+              @mouseenter="
+                (e: MouseEvent) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--base)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--hover-text, #fff)';
+                }
+              "
+              @mouseleave="
+                (e: MouseEvent) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = 'var(--pill-bg, #fff)';
+                  (e.currentTarget as HTMLAnchorElement).style.color = 'var(--pill-text, #fff)';
+                }
+              "
+            >
+              {{ item.label }}
+            </NuxtLink>
+          </template>
         </li>
       </ul>
     </div>
