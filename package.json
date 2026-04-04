@@ -1,0 +1,24 @@
+{
+  "name": "w2",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "motion-v": "^2.2.0",
+    "nuxt": "^4.4.2",
+    "vue": "^3.5.31",
+    "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "gsap": "^3.14.2",
+    "lucide-vue-next": "^1.0.0",
+    "tailwindcss": "^4.2.2"
+  }
+}
