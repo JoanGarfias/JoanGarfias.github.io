@@ -40,7 +40,11 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: 'github-pages'
+    preset: 'github-pages',
+    static: true
+  },
+  experimental: {
+    payloadExtraction: true
   },
   build: {
     transpile: ['gsap'],
