@@ -6,6 +6,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   css: ['~/assets/css/main.css'],
+  app: {
+    baseURL: '/nombre-de-tu-repositorio/',
+    buildAssetsDir: 'assets',
+  },
+  nitro: {
+    preset: 'github-pages'
+  },
   build: {
     transpile: ['gsap'],
   },
