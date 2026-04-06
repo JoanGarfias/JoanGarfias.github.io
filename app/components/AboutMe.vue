@@ -34,6 +34,9 @@
 
             <div class="space-y-6 text-slate-300 text-base md:text-lg leading-loose">
               <p>
+                Actualmente estoy en la recta final de la carrera de <span class="text-white font-medium">Ingeniería en Computación</span> en la Universidad del Istmo, campus Tehuantepec. Cursar el octavo semestre me ha permitido pasar de la teoría académica a entender que el software no solo se trata de sintaxis, sino de arquitectura y resolución de problemas.
+              </p>
+              <p>
                 Soy desarrollador y me importa tanto cómo se ve algo como cómo funciona. Antes de escribir código, prefiero entender bien el problema y el contexto; eso suele evitar soluciones innecesarias.
               </p>
               <p>
