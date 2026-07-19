@@ -13,7 +13,7 @@ import { Download as LucideDownload } from 'lucide-vue-next';
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-sky"></span>
         </span>
-        Construyendo productos y sistemas web
+        Construyendo soluciones con propósito
       </div>
       
       <h1 class="text-4xl sm:text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">
