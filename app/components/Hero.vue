@@ -21,7 +21,7 @@ import { Download as LucideDownload } from 'lucide-vue-next';
       </h1>
 
       <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-        Soy un <span class="text-white font-medium">Desarrollador Full-stack</span>. Construyo aplicaciones web funcionales, desde el backend hasta la interfaz, enfocándome en que realmente resuelvan problemas.
+        Soy un <span class="text-white font-medium">Desarrollador de Software</span>. Construyo soluciones funcionales, desde el backend hasta la interfaz, enfocándome en que realmente resuelvan problemas.
       </p>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
