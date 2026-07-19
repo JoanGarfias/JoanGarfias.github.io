@@ -17,12 +17,12 @@
           <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">01</span>
             <h3 class="text-xs md:text-sm font-black text-white tracking-[0.2em] md:tracking-[0.3em] uppercase">Frontend Architecture</h3>
-            <div class="h-px flex-grow bg-white/10"></div>
+            <div class="h-px grow bg-white/10"></div>
           </div>
           
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
             <div v-for="skill in frontend" :key="skill.name" 
-              class="group relative flex flex-col items-center p-6 md:p-8 bg-white/[0.04] border border-white/10 rounded-2xl hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500">
+              class="group relative flex flex-col items-center p-6 md:p-8 bg-white/4 border border-white/10 rounded-2xl hover:bg-white/8 hover:border-white/20 transition-all duration-500">
               <div class="w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 flex items-center justify-center grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500 opacity-100 md:opacity-50 md:group-hover:opacity-100">
                 <img v-if="skill.icon" :src="'/icons/' + skill.icon" :alt="skill.name" 
                   class="w-full h-full object-contain" />
@@ -37,12 +37,12 @@
           <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">02</span>
             <h3 class="text-xs md:text-sm font-black text-white tracking-[0.2em] md:tracking-[0.3em] uppercase">Backend & Infrastructure</h3>
-            <div class="h-px flex-grow bg-white/10"></div>
+            <div class="h-px grow bg-white/10"></div>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
             <div v-for="skill in backend" :key="skill.name" 
-              class="group relative flex flex-col items-center p-6 md:p-8 bg-white/[0.04] border border-white/10 rounded-2xl hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500">
+              class="group relative flex flex-col items-center p-6 md:p-8 bg-white/4 border border-white/10 rounded-2xl hover:bg-white/8 hover:border-white/20 transition-all duration-500">
               <div class="w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 flex items-center justify-center grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-500 opacity-100 md:opacity-50 md:group-hover:opacity-100">
                 <img v-if="skill.icon" :src="'/icons/' + skill.icon" :alt="skill.name" 
                   class="w-full h-full object-contain" />
@@ -51,6 +51,37 @@
             </div>
           </div>
         </div>
+
+        <!-- Certifications Group -->
+        <div>
+          <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+            <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">03</span>
+            <h3 class="text-xs md:text-sm font-black text-white tracking-[0.2em] md:tracking-[0.3em] uppercase">Certificaciones</h3>
+            <div class="h-px grow bg-white/10"></div>
+          </div>
+
+          <a
+            href="https://www.credly.com/badges/05c0a6b5-8ec7-4329-8394-6e5a25947141/public_url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block rounded-3xl border border-white/10 bg-linear-to-br from-white/5 to-white/2 p-6 md:p-8 transition-all duration-500 hover:border-cyan-400/30 hover:shadow-[0_0_40px_rgba(34,211,238,0.08)]"
+          >
+            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div class="space-y-3 max-w-2xl">
+                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-cyan-300/80">AWS Certified Cloud Practitioner</p>
+                <h4 class="text-2xl md:text-3xl font-black tracking-tight text-white uppercase">AWS CLF-C002</h4>
+                <p class="text-sm md:text-base text-slate-400 leading-relaxed">
+                  Certificación de fundamentos de AWS que valida conocimiento básico de nube, seguridad, arquitectura, precios y servicios principales.
+                </p>
+              </div>
+
+              <div class="inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 group-hover:text-white transition-colors">
+                Ver credencial
+                <LucideLink class="w-4 h-4" />
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -58,6 +89,7 @@
 
 <script setup>
 import { Layers as LucideLayers, Database as LucideDatabase } from 'lucide-vue-next'
+import { ExternalLink as LucideLink } from 'lucide-vue-next';
 
 const frontend = [
   { name: 'Vue.js', icon: 'vue.svg' },
@@ -69,10 +101,12 @@ const frontend = [
 ]
 
 const backend = [
+  { name: 'AWS', icon: 'aws.svg' },
   { name: 'Python', icon: 'python.svg' },
   { name: 'PostgreSQL', icon: 'postgresql.svg' },
   { name: 'MySQL', icon: 'mysql.svg' },
   { name: 'PHP', icon: 'php.svg' },
-  { name: 'Laravel', icon: 'laravel.svg' }
+  { name: 'Laravel', icon: 'laravel.svg' }, 
+  { name: 'NestJS', icon: 'nestjs.svg' }
 ]
 </script>
