@@ -3,7 +3,7 @@ import { marked } from 'marked';
 import { Buffer } from 'buffer';
 
 if (typeof window !== 'undefined') {
-  window.Buffer = Buffer;
+  (window as any).Buffer = Buffer;
 }
 
 export interface Project {
@@ -27,7 +27,11 @@ export interface Project {
 export const useProjects = () => {
   const getProjectById = async (id: string): Promise<Project | null> => {
     try {
-      const files = import.meta.glob('../content/proyectos/*.md', { as: 'raw', eager: true });
+      const files = import.meta.glob('../content/proyectos/*.md', {
+        query: '?raw',
+        eager: true,
+        import: 'default'
+      });
       const filePath = `../content/proyectos/${id}.md`;
       const rawContent = files[filePath];
 
@@ -48,7 +52,11 @@ export const useProjects = () => {
 
   const getAllProjects = async (): Promise<Project[]> => {
     try {
-      const files = import.meta.glob('../content/proyectos/*.md', { as: 'raw', eager: true });
+      const files = import.meta.glob('../content/proyectos/*.md', {
+        query: '?raw',
+        eager: true,
+        import: 'default'
+      });
       return Object.entries(files).map(([_, rawContent]) => {
         const { data, content } = matter(rawContent as string);
         return {
