@@ -13,7 +13,7 @@
             <img src="/logo.svg" alt="" role="presentation" class="w-8 h-8">
             <span class="text-xl font-bold tracking-tight text-white italic">Joan Garfias</span>
           </div>
-          <p class="text-slate-400 text-sm leading-relaxed max-w-xs">
+          <p class="text-slate-300 text-sm leading-relaxed max-w-xs">
             Desarrollador de software apasionado por crear experiencias digitales excepcionales y resolver problemas complejos mediante tecnología moderna.
           </p>
         </div>
@@ -28,7 +28,8 @@
             <a 
               href="https://github.com/JoanGarfias" 
               target="_blank" 
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 group"
+              rel="noopener noreferrer"
+              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
               aria-label="GitHub"
             >
               <Github class="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -36,7 +37,8 @@
             <a 
               href="https://linkedin.com/in/joangarfias" 
               target="_blank" 
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 group"
+              rel="noopener noreferrer"
+              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
               aria-label="LinkedIn"
             >
               <Linkedin class="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -44,14 +46,15 @@
             <a 
               href="https://youtube.com/@joan_dev" 
               target="_blank" 
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 group"
+              rel="noopener noreferrer"
+              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
               aria-label="YouTube"
             >
               <Youtube class="w-5 h-5 group-hover:scale-110 transition-transform" />
             </a>
             <a 
               href="mailto:joanpagarfk@gmail.com" 
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:border-sky-500/50 hover:bg-sky-500/5 transition-all duration-300 group"
+              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
               aria-label="Email"
             >
               <Mail class="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -62,11 +65,11 @@
 
       <!-- Footer Bottom -->
       <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-slate-500 text-xs font-medium flex items-center gap-2">
+        <div class="text-slate-400 text-xs font-medium flex items-center gap-2">
           <span>© {{ new Date().getFullYear() }} Joan Garfias.</span>
           <span class="hidden md:inline text-slate-800">•</span>
           <span class="flex items-center gap-1 group">
-            Hecho con <Heart class="w-3 h-3 text-red-500/70 group-hover:scale-125 transition-transform" /> en Nuxt & Tailwind.
+            Hecho con <Heart class="heart-beat w-3 h-3 text-red-400" fill="currentColor" /> en Nuxt & Tailwind.
           </span>
         </div>
         

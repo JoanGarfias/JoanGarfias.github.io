@@ -1,47 +1,61 @@
 <script setup>
-import { Download as LucideDownload } from 'lucide-vue-next';
+import { ArrowRight, Download, MapPin } from 'lucide-vue-next'
 </script>
 
 <template>
-  <section class="min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden px-6 relative">
-    <div class="absolute -top-40 -left-20 w-[500px] h-[500px] bg-sky/10 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute -bottom-40 -right-20 w-[500px] h-[500px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+  <section class="relative flex min-h-[min(920px,100svh)] items-center overflow-hidden px-4 pb-20 pt-32 sm:px-6">
+    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-[8%] top-[18%] h-72 w-72 rounded-full bg-cyan-400/10 blur-[110px]"></div>
+      <div class="absolute bottom-[8%] right-[4%] h-96 w-96 rounded-full bg-blue-600/10 blur-[130px]"></div>
+      <div class="hero-grid absolute inset-0 opacity-35"></div>
+    </div>
 
-    <div class="max-w-4xl mx-auto text-center space-y-8 relative">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky/20 bg-sky/5 text-sky text-xs font-semibold tracking-wider uppercase mb-4">
-        <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-sky"></span>
+    <div class="site-container relative grid items-end gap-14 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-20">
+      <div class="max-w-5xl">
+        <div class="eyebrow mb-8">Construyo software con propósito</div>
+
+        <h1 class="display-title max-w-5xl uppercase">
+          Hola, soy Joan.<br>
+          <span class="text-slate-400">Convierto problemas</span><br>
+          <span class="bg-linear-to-r from-cyan-200 via-cyan-400 to-blue-400 bg-clip-text text-transparent">en productos útiles</span><span class="text-cyan-300/60">.</span>
+        </h1>
+
+        <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl md:leading-9">
+          Desarrollador de software. Diseño y construyo experiencias claras, rápidas y escalables, desde la arquitectura del backend hasta el último detalle de la interfaz.
+        </p>
+
+        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <NuxtLink to="/proyectos" class="button-primary group" aria-label="Ver proyectos de Joan Garfias">
+            Ver proyectos
+            <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </NuxtLink>
+          <NuxtLink to="/contacto" class="button-secondary">Hablemos</NuxtLink>
+          <a href="/cv.pdf" download="CV_Joan_Garfias.pdf" class="button-secondary group" aria-label="Descargar currículum de Joan Garfias en PDF">
+            <Download class="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+            Descargar CV
+          </a>
+        </div>
+      </div>
+
+      <aside class="hidden border-l border-white/15 pl-7 lg:block" aria-label="Disponibilidad profesional">
+        <span class="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">
+          <span class="relative flex h-2 w-2">
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-50"></span>
+            <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-300"></span>
+          </span>
+          Disponible para colaborar
         </span>
-        Construyendo soluciones con propósito
-      </div>
-      
-      <h1 class="text-4xl sm:text-5xl md:text-8xl font-black mb-8 text-white tracking-tighter italic uppercase leading-none">
-          Hola, soy <span class="bg-gradient-to-r from-sky to-cyan-400 bg-clip-text text-transparent">Joan Garfias</span>.
-      </h1>
-
-      <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-        Soy un <span class="text-white font-medium">Desarrollador de Software</span>. Construyo soluciones funcionales, desde el backend hasta la interfaz, enfocándome en que realmente resuelvan problemas.
-      </p>
-
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 pt-10">
-        <NuxtLink to="/proyectos" class="group relative w-full sm:w-auto px-10 py-4 bg-sky text-slate-950 font-bold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-sky/30" aria-label="Ver mis proyectos destacados">
-          <span class="relative z-10">Ver Proyectos</span>
-          <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-        </NuxtLink>
-        
-        <NuxtLink to="/contacto" class="w-full sm:w-auto px-10 py-4 bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 text-white font-bold rounded-2xl transition-all duration-300 backdrop-blur-sm" aria-label="Ir a la página de contacto">
-          Contáctame
-        </NuxtLink>
-        
-        <a href="/cv.pdf" 
-           download="CV_Joan_Garfias.pdf"
-           class="cursor-pointer group w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 font-bold rounded-2xl hover:bg-cyan-500/10 hover:border-cyan-500/40 transition-all duration-300"
-           aria-label="Descargar mi Currículum Vitae en PDF">
-          <LucideDownload class="w-5 h-5 group-hover:animate-bounce" />
-          <span>Descargar CV</span>
-        </a>
-      </div>
+        <p class="text-sm leading-6 text-slate-400">Proyectos web, producto digital y oportunidades de desarrollo.</p>
+        <p class="mt-5 flex items-center gap-2 text-sm font-semibold text-slate-200"><MapPin class="h-4 w-4 text-cyan-300" /> Oaxaca, México</p>
+      </aside>
     </div>
   </section>
 </template>
+
+<style scoped>
+.hero-grid {
+  background-image: linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 75%, transparent);
+}
+</style>

@@ -1,12 +1,12 @@
 <template>
-  <section id="contacto" class="py-16 px-4 md:px-6 bg-transparent relative overflow-hidden">
-    <div class="max-w-6xl mx-auto">
+  <section id="contacto" class="section-space bg-transparent relative overflow-hidden">
+    <div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
         
         <!-- Redes y Mensaje -->
         <div class="lg:col-span-12 mb-4">
-           <span class="text-[10px] font-black uppercase tracking-[0.4em] text-primary/80 mb-4 block text-center lg:text-left">Contacto</span>
-           <h2 class="text-4xl sm:text-5xl md:text-8xl font-black italic uppercase tracking-tighter text-white leading-none text-center lg:text-left mb-8">
+           <span class="eyebrow mb-5">Contacto</span>
+           <h2 class="display-title uppercase mb-8">
             Vamos a <br class="hidden lg:block"/> <span class="text-slate-400">colaborar.</span>
           </h2>
         </div>
@@ -17,12 +17,12 @@
           </p>
 
           <div class="space-y-4 pt-10 border-t border-white/5">
-            <div v-for="social in socials" :key="social.label" class="flex items-center justify-between group py-4 border-b border-white/[0.03]">
+            <div v-for="social in socials" :key="social.label" class="flex items-center justify-between gap-4 group py-4 border-b border-white/10">
               <div class="flex items-center gap-4">
-                <component :is="social.icon" class="w-4 h-4 text-slate-400 md:text-slate-500 md:group-hover:text-primary transition-colors" />
-                <span class="text-[10px] uppercase tracking-widest text-slate-400 md:text-slate-500 font-black">{{ social.label }}</span>
+                <component :is="social.icon" class="w-4 h-4 text-slate-300 group-hover:text-cyan-300 transition-colors" />
+                <span class="text-xs uppercase tracking-widest text-slate-300 font-black">{{ social.label }}</span>
               </div>
-              <a :href="social.link" target="_blank" class="text-sm text-slate-200 hover:text-white font-bold transition-all md:group-hover:translate-x-1">
+              <a :href="social.link" target="_blank" rel="noopener noreferrer" class="text-sm text-slate-200 hover:text-white font-bold transition-all md:group-hover:translate-x-1">
                 {{ social.value }}
               </a>
             </div>
@@ -31,7 +31,7 @@
 
         <!-- Formulario con mejor contraste -->
         <div class="lg:col-span-7 w-full max-w-full">
-          <form @submit.prevent="handleSubmit" class="relative space-y-8 md:space-y-12 p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-3xl bg-white/[0.02] border border-white/5 w-full">
+          <form @submit.prevent="handleSubmit" class="glass-panel relative space-y-8 md:space-y-10 p-6 md:p-10 rounded-3xl w-full">
             <!-- Mensajes de Estado -->
             <Transition
               enter-active-class="transition duration-300 ease-out"
@@ -53,7 +53,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
               <div class="space-y-2">
-                <label for="name" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Nombre completo</label>
+                <label for="name" class="text-xs font-black uppercase tracking-widest text-slate-300 ml-1">Nombre completo</label>
                 <input 
                   id="name"
                   v-model="form.name"
@@ -62,12 +62,12 @@
                   autocomplete="name"
                   required
                   placeholder="Ej. Juan Pérez" 
-                  class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                  class="w-full bg-transparent border-b-2 border-slate-500 focus:border-cyan-300 outline-none transition-all placeholder:text-slate-400 text-white font-semibold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
                   :disabled="isPending || isSuccess"
                 />
               </div>
               <div class="space-y-2">
-                <label for="email" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Correo electrónico</label>
+                <label for="email" class="text-xs font-black uppercase tracking-widest text-slate-300 ml-1">Correo electrónico</label>
                 <input 
                   id="email"
                   v-model="form.email"
@@ -76,13 +76,13 @@
                   autocomplete="email"
                   required
                   placeholder="tu@email.com" 
-                  class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50" 
+                  class="w-full bg-transparent border-b-2 border-slate-500 focus:border-cyan-300 outline-none transition-all placeholder:text-slate-400 text-white font-semibold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
                   :disabled="isPending || isSuccess"
                 />
               </div>
             </div>
             <div class="space-y-4">
-              <label for="message" class="text-[10px] font-black uppercase tracking-widest text-slate-300 ml-1">Tu mensaje</label>
+              <label for="message" class="text-xs font-black uppercase tracking-widest text-slate-300 ml-1">Tu mensaje</label>
               <textarea 
                 id="message"
                 v-model="form.message"
@@ -90,7 +90,7 @@
                 required
                 placeholder="Cuéntame sobre tu proyecto o idea..." 
                 rows="4" 
-                class="w-full bg-transparent border-b-2 border-slate-600 focus:border-primary outline-none transition-all resize-none placeholder:text-slate-500 text-white font-bold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
+                class="w-full bg-transparent border-b-2 border-slate-500 focus:border-cyan-300 outline-none transition-all resize-none placeholder:text-slate-400 text-white font-semibold text-base md:text-lg py-3 md:py-4 disabled:opacity-50"
                 :disabled="isPending || isSuccess"
               ></textarea>
             </div>
@@ -101,7 +101,7 @@
             <button 
               type="submit" 
               :disabled="isPending || isSuccess"
-              class="group flex items-center justify-center gap-3 w-full py-4 md:py-5 bg-slate-100 text-slate-950 md:bg-slate-900 md:text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl md:hover:bg-primary md:hover:text-white transition-all duration-300 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed" 
+              class="button-primary group w-full py-4 md:py-5 uppercase tracking-[0.16em] disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Enviar mensaje de contacto"
             >
               <template v-if="isPending">
@@ -114,7 +114,7 @@
               </template>
               <template v-else>
                 Enviar Propuesta
-                <LucideMail class="w-4 h-4 transition-transform md:group-hover:translate-x-1" />
+                <LucideSend class="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </template>
             </button>
           </form>
@@ -125,7 +125,7 @@
 </template>
 
 <script setup>
-import { Github as LucideGithub, Linkedin as LucideLinkedin, Twitter as LucideTwitter, Mail as LucideMail, LucideYoutube, LucideCheckCircle, LucideAlertCircle, LucideLoader2 } from 'lucide-vue-next'
+import { Github as LucideGithub, Linkedin as LucideLinkedin, Mail as LucideMail, Send as LucideSend, LucideYoutube, LucideCheckCircle, LucideAlertCircle, LucideLoader2 } from 'lucide-vue-next'
 import { useContact } from '../composables/useContact'
 
 const { isPending, isSuccess, error, sendEmail, resetStatus } = useContact()

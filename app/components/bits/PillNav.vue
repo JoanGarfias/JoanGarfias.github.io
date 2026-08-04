@@ -257,10 +257,10 @@ const isActive = (href?: string) => {
 </script>
 
 <template>
-  <div class="top-[1em] left-0 z-[1000] fixed w-full">
+  <div class="top-4 left-0 z-50 fixed w-full">
     <nav
       :class="['w-full flex items-center justify-between box-border px-4', className]"
-      aria-label="Primary"
+      aria-label="Navegación principal"
       :style="cssVars"
     >
       <NuxtLink
@@ -343,7 +343,7 @@ const isActive = (href?: string) => {
       <button
         ref="hamburgerRef"
         @click="toggleMobileMenu"
-        aria-label="Toggle menu"
+        :aria-label="isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
         :aria-expanded="isMobileMenuOpen"
         class="md:hidden relative flex flex-col justify-center items-center gap-1 p-0 border-0 rounded-full cursor-pointer"
         :style="{

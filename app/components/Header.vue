@@ -7,8 +7,8 @@
     activeHref="/"
     class="custom-nav"
     ease="power2.easeOut"
-    baseColor="#000000"
-    pillColor="#000000"
+    baseColor="#07111d"
+    pillColor="#0d1b2a"
     hoveredPillTextColor="#ffffff"
     pillTextColor="#ffffff"
   />
