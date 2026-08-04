@@ -15,13 +15,16 @@ import { ArrowRight, Download, MapPin } from 'lucide-vue-next'
         <div class="eyebrow mb-8">Construyo software con propósito</div>
 
         <h1 class="display-title max-w-5xl uppercase">
-          Hola, soy Joan.<br>
-          <span class="text-slate-400">Convierto problemas</span><br>
-          <span class="bg-linear-to-r from-cyan-200 via-cyan-400 to-blue-400 bg-clip-text text-transparent">en productos útiles</span><span class="text-cyan-300/60">.</span>
+          Construyo<br>
+          <span class="text-slate-400">software que resuelve</span><br>
+          <span class="bg-linear-to-r from-cyan-200 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            problemas reales.
+          </span>
         </h1>
 
         <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-300 md:text-xl md:leading-9">
-          Desarrollador de software. Diseño y construyo experiencias claras, rápidas y escalables, desde la arquitectura del backend hasta el último detalle de la interfaz.
+          Soy Joan, desarrollador de software especializado en backend, cloud e infraestructura.
+          Diseño productos rápidos, mantenibles y preparados para crecer.
         </p>
 
         <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
