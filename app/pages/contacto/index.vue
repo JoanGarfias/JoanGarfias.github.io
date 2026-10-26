@@ -6,11 +6,11 @@ definePageMeta({
 useHead({
   title: 'Contacto | Joan Garfias',
   meta: [
-    { name: 'description', content: '¿Tienes un proyecto en mente? Ponerse en contacto conmigo es el primer paso para hacerlo realidad.' }
+    { name: 'description', content: 'Escríbeme sobre un proyecto, una oportunidad de empleo o una invitación a tu evento.' }
   ]
 })
 </script>
 
 <template>
-  <Contact />
+  <Contact title-tag="h1" />
 </template>

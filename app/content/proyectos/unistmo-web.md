@@ -1,23 +1,10 @@
 ---
 id: unistmo-web
-title: Universidad del Istmo - Sitio web
-description: Sitio web de la Universidad del Istmo.
 period: Enero de 2026 - Actualidad
 team: Colaborativo
 teamSize: 7
 collaborators: ["Joan Garfias", "Karla G.", "Jeremy O.", "Juan E.", "Sadie B.", "Joshua H.", "Orlando C."]
-role: Fullstack Developer
-technologies: ["AstroJS", "Tailwind CSS", "PostgreSQL", "Strapi CMS", "Docker", "Docker Compose"]
 location: Oaxaca de Juárez, México
-image: /projects/unistmo/1.png
-images:
-  - /projects/unistmo/1.png
-  - /projects/unistmo/2.png
-  - /projects/unistmo/3.png
-  - /projects/unistmo/4.png
-  - /projects/unistmo/5.png
-  - /projects/unistmo/6.png
-demo: https://www2.unistmo.edu.mx
 ---
 
 ## Contexto

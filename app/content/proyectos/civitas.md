@@ -1,7 +1,5 @@
 ---
 id: civitas
-title: Civitas
-description: Civitas es una aplicación web que permite gestionar un condominio en la parte administrativa, residencial y de seguridad.
 period: Mayo 2026 - Junio 2026
 team: Colaborativo
 teamSize: 23
@@ -30,17 +28,7 @@ collaborators: [
     "Alexis R.",
     "Gerson A.",
 ]
-role: Fullstack Developer
-technologies: ["NestJS", "Next.js", "React", "Tailwind CSS", "GitHub Actions", "Docker", "PostgreSQL", "Cloudflare R2"]
 location: Oaxaca de Juárez
-image: /projects/civitas/1.jpeg
-images:
-    - /projects/civitas/1.jpeg
-    - /projects/civitas/2.jpeg
-    - /projects/civitas/3.jpeg
-    - /projects/civitas/4.jpeg
-github: https://github.com/UDEVIXT/civitas-
-
 ---
 
 ## Contexto del proyecto

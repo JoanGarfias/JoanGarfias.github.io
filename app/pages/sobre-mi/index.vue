@@ -2,11 +2,11 @@
 useHead({
   title: 'Sobre Mí | Joan Garfias',
   meta: [
-    { name: 'description', content: 'Conoce más sobre mi trayectoria, filosofía de trabajo y pasión por el desarrollo de software y la tecnología.' }
+    { name: 'description', content: 'Quién soy, cómo trabajo y por qué construyo software desde Oaxaca, México.' }
   ]
 })
 </script>
 
 <template>
-  <AboutMe />
+  <AboutMe title-tag="h1" />
 </template>

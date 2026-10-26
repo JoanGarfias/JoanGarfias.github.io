@@ -1,23 +1,10 @@
 ---
 id: hecho-en-casa
-title: Hecho en Casa
-description: Una plataforma de pedidos para una pastelería local.
 period: Octubre 2024 - Mayo 2025
 team: Colaborativo
 teamSize: 10
 collaborators: ["Joan Garfias", "Karla G.", "Jeremy O.", "Jeovani P.", "Juan E.", "Jeycson G.", "Mariana P.", "Angel J.", "Gerson R.", "Isacar C."]
-role: Fullstack Developer
-technologies: ["PHP", "Laravel", "MySQL", "JavaScript", "Blade", "Docker"]
 location: Oaxaca de Juárez, México
-image: /projects/hc/1.png
-images:
-  - /projects/hc/1.png
-  - /projects/hc/2.png
-  - /projects/hc/3.png
-  - /projects/hc/4.png
-  - /projects/hc/5.png
-  - /projects/hc/6.png
-  - /projects/hc/7.png
 ---
 
 ## Contexto

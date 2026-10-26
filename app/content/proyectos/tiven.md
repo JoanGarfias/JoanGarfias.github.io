@@ -1,20 +1,10 @@
 ---
 id: tiven
-title: Tiven - Software como Servicio
-description: Una plataforma SaaS que ofrece a los salones de belleza una solución integral para gestionar sus operaciones diarias, incluyendo reservas, inventario, marketing y seguimientos de clientes.
 period: Octubre de 2025 - Actualidad
 team: Equipo
 teamSize: 6
 collaborators: ["Joan Garfias", "Karla G.", "Jeremy O.", "Sadie B.", "Saul P.", "Jimmy V."]
-role: Backend Developer
-technologies: ["Astro", "PHP", "Laravel", "PostgreSQL", "Vue 3", "Docker"]
 location: Oaxaca de Juárez, México
-image: /projects/tiven/1.png
-images:
-  - /projects/tiven/1.png
-  - /projects/tiven/2.png
-  - /projects/tiven/3.png
-demo: https://tiven.app
 ---
 
 ## Contexto

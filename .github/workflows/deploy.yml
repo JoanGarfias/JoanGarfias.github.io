@@ -16,7 +16,7 @@ jobs:
           node-version: "22"
       # Pick your own package manager and build script
       - run: pnpm install
-      - run: pnpm build
+      - run: pnpm generate
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -6,11 +6,11 @@ definePageMeta({
 useHead({
   title: 'Proyectos | Joan Garfias',
   meta: [
-    { name: 'description', content: 'Explora mi portafolio de proyectos de desarrollo web, desde aplicaciones full-stack hasta interfaces interactivas.' }
+    { name: 'description', content: 'Casos de estudio de software que he construido: backend, cloud y producto web para negocios reales.' }
   ]
 })
 </script>
 
 <template>
-    <ProjectGrid />
+    <ProjectGrid title-tag="h1" />
 </template>

@@ -1,21 +1,10 @@
 ---
 id: curvex
-title: Curvex
-description: Curvex es una aplicación web diseñada para realizar cálculos estadísticos y visualizar distribuciones de probabilidad de una manera intuitiva y eficiente.
 period: Noviembre 2025 - Enero 2026
 team: Colaborativo
 teamSize: 5
 collaborators: ["Joan Garfias", "Karla G.", "Jeremy O.", "Juan E.", "Gerardo T."]
-role: Fullstack Developer
-technologies: ["PHP", "Laravel", "Vue 3", "Tailwind CSS"]
 location: Oaxaca de Juárez, México
-image: /projects/curvex/1.jpeg
-images:
-  - /projects/curvex/1.jpeg
-  - /projects/curvex/2.jpeg
-  - /projects/curvex/3.jpeg
-  - /projects/curvex/4.jpeg
-github: https://github.com/JoanGarfias/curvex
 ---
 
 ## Contexto
