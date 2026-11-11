@@ -1,7 +1,6 @@
-// Envío del formulario a la API de correo (repo aparte en Vercel).
-// La API recibe { name, email, message, lock }; el asunto viaja al inicio del mensaje
-// hasta que la API acepte un campo `subject` (ver PENDIENTES.md).
-export const CONTACT_ENDPOINT = 'https://portfolio-email-api-delta.vercel.app/api/contacto'
+// Envío del formulario a la ruta del propio sitio (server/api/contacto.post.ts, Pages Function en Cloudflare).
+// Recibe { name, email, subject, message, lock }.
+export const CONTACT_ENDPOINT = '/api/contacto'
 export const CONTACT_EMAIL = 'joanpagarfpf@gmail.com'
 
 export const contactSubjects = [
@@ -26,12 +25,10 @@ export const useContact = () => {
   const isSuccess = ref(false)
   const error = ref<string | null>(null)
 
-  const sendEmail = async ({ subject, ...form }: ContactForm) => {
+  const sendEmail = async (form: ContactForm) => {
     isPending.value = true
     isSuccess.value = false
     error.value = null
-
-    const subjectLabel = contactSubjects.find(s => s.value === subject)?.label ?? 'Otro'
 
     try {
       const response = await fetch(CONTACT_ENDPOINT, {
@@ -40,7 +37,7 @@ export const useContact = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({ ...form, message: `[Asunto: ${subjectLabel}]\n\n${form.message}` })
+        body: JSON.stringify(form)
       })
 
       if (!response.ok) throw new Error(`HTTP ${response.status}`)

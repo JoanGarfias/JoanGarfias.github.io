@@ -45,7 +45,7 @@ Ordenado por prioridad: hero y comunidad primero.
 | Tema | Dónde | Qué falta |
 |---|---|---|
 | Correo de contacto | `app/composables/useContact.ts` → `CONTACT_EMAIL` | Confirmar si es `joanpagarfk@gmail.com` (el que estaba en el sitio) u otro. Se usa en Contacto y como alternativa en el error del formulario. El ícono de email del footer (`Footer.vue`) tiene el correo escrito aparte |
-| Formulario | API en Vercel (`portfolio-email-api-delta.vercel.app/api/contacto`, repo aparte) | La API recibe `{ name, email, message, lock }`. El asunto viaja al inicio del mensaje (`[Asunto: …]`). Si quieres un campo `subject` propio, agrégalo a la API y cambia `useContact.ts`. Verifica también que acepte peticiones desde `https://www.joangarfias.me` (CORS) |
+| Formulario | `server/api/contacto.post.ts` (Pages Function en Cloudflare) | Configura los secretos `NUXT_RESEND_API_KEY` y `NUXT_CONTACT_EMAIL` en el proyecto de Cloudflare Pages, y `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` en GitHub Actions. Después apunta `www.joangarfias.me` a Cloudflare Pages y desactiva GitHub Pages |
 | Dominio | DNS del dominio | Confirma que `joangarfias.me` (sin www) apunta a GitHub Pages para que redirija a `www.joangarfias.me`, que es el canonical |
 | Pendientes en producción | `.github/workflows/deploy.yml` | Cuando todo esté listo, agrega `env: NUXT_PUBLIC_SHOW_PENDING: false` al paso `pnpm generate` |
 | Fuente display | `app/app.config.ts` → `brandFonts` | Hoy en `false` (fuente del sistema). En `true` usa Space Grotesk + JetBrains Mono; habría que bajar el tracking del titular a unos −0.045em |

@@ -18,6 +18,9 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
+    // Solo servidor (formulario de contacto): NUXT_RESEND_API_KEY y NUXT_CONTACT_EMAIL
+    resendApiKey: '',
+    contactEmail: '',
     public: {
       siteUrl: SITE_URL,
       // NUXT_PUBLIC_SHOW_PENDING=false oculta los placeholders de contenido pendiente
@@ -68,8 +71,8 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: 'github-pages',
-    static: true,
+    // Cloudflare Pages: las páginas se prerenderizan como HTML estático y solo /api/* corre como Pages Function
+    preset: 'cloudflare-pages',
     prerender: {
       crawlLinks: true,
       routes: ['/', '/proyectos', '/habilidades', '/sobre-mi', '/contacto', ...projectRoutes]
