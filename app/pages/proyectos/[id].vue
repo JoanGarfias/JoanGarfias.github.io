@@ -1,149 +1,180 @@
 <script setup lang="ts">
-import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink, Github, Users } from 'lucide-vue-next'
+import { ArrowLeft, ArrowUpRight, ExternalLink, Github, Users } from 'lucide-vue-next'
+import { getProject } from '~/content/projects'
 
 const route = useRoute()
-const { getProjectById } = useProjects()
-const project = ref<any>(null)
-const activeImage = ref(0)
-const contentRef = ref<HTMLElement | null>(null)
-let contentObserver: IntersectionObserver | null = null
+const { getCaseStudy } = useProjects()
+const { siteUrl } = useRuntimeConfig().public
 
-onMounted(async () => {
-  project.value = await getProjectById(route.params.id as string)
-  if (!project.value) return
+const projectId = route.params.id as string
+const project = getProject(projectId)
 
-  useHead({
-    title: `${project.value.title} | Proyecto de Joan Garfias`,
-    meta: [
-      { name: 'description', content: project.value.description },
-      { property: 'og:title', content: `${project.value.title} | Joan Garfias` },
-      { property: 'og:description', content: project.value.description },
-      { property: 'og:image', content: project.value.images?.[0] || 'https://joangarfias.com/og-image.png' }
-    ]
-  })
+if (!project) {
+  throw createError({ statusCode: 404, statusMessage: 'Proyecto no encontrado', fatal: true })
+}
 
-  await nextTick()
-  const blocks = contentRef.value?.querySelectorAll(':scope > h2, :scope > p, :scope > ul')
-  if (!blocks?.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    blocks?.forEach(block => block.classList.add('is-visible'))
-    return
-  }
-  contentObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return
-      entry.target.classList.add('is-visible')
-      contentObserver?.unobserve(entry.target)
-    })
-  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' })
-  blocks.forEach(block => contentObserver?.observe(block))
+const { data: caseStudy } = await useAsyncData(`case-study-${projectId}`, () => getCaseStudy(projectId))
+
+useSeoMeta({
+  title: `${project.name} | Caso de estudio de Joan Garfias`,
+  description: project.summary,
+  ogTitle: `${project.name} | Joan Garfias`,
+  ogDescription: project.summary,
+  ogImage: `${siteUrl}${project.cover?.src ?? '/joan.jpeg'}`,
+  twitterImage: `${siteUrl}${project.cover?.src ?? '/joan.jpeg'}`
 })
 
-onBeforeUnmount(() => contentObserver?.disconnect())
+const section = (key: string) => caseStudy.value?.sections.find(s => s.key === key)
 
-const next = () => {
-  if (project.value?.images?.length) activeImage.value = (activeImage.value + 1) % project.value.images.length
-}
-const prev = () => {
-  if (project.value?.images?.length) activeImage.value = (activeImage.value - 1 + project.value.images.length) % project.value.images.length
-}
-const projectInfo = computed(() => project.value ? {
-  Periodo: project.value.period,
-  Equipo: project.value.team,
-  Rol: project.value.role,
-  Ubicación: project.value.location
-} : null)
+// Orden del caso de estudio: Contexto → Problema → Solución → Mi rol → Decisiones técnicas
+// → Arquitectura (si hay) → Retos → Resultado → Demo (si hay)
+const before = computed(() => ['contexto', 'problema', 'solucion', 'rol', 'decisiones'].map(section).filter(Boolean))
+const after = computed(() => ['retos', 'resultado'].map(section).filter(Boolean))
+const extra = computed(() => caseStudy.value?.sections.filter(s => s.key === 'otro') ?? [])
+
+const meta = computed(() => caseStudy.value?.meta)
+const projectInfo = computed(() => ({
+  Periodo: meta.value?.period,
+  Equipo: meta.value?.teamSize && meta.value.teamSize > 1 ? `${meta.value.team} · ${meta.value.teamSize} personas` : meta.value?.team,
+  Rol: project.role,
+  Ubicación: meta.value?.location
+}))
 </script>
 
 <template>
-  <div v-if="project" class="min-h-screen bg-slate-950 px-4 pb-24 pt-28 sm:px-6 lg:pt-32">
-    <div class="mx-auto max-w-7xl">
-      <NuxtLink to="/proyectos" class="group mb-12 inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-bold uppercase tracking-[0.14em] text-slate-300 transition hover:text-cyan-200 lg:mb-16">
-        <ArrowLeft class="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+  <div class="pb-16 pt-6 lg:pt-10">
+    <div>
+      <NuxtLink to="/#proyectos" class="button-secondary group mb-10">
+        <ArrowLeft class="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
         Proyectos
       </NuxtLink>
 
-      <div class="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-14 xl:gap-20">
-        <main class="space-y-16 lg:col-span-8 lg:space-y-20">
+      <div class="grid grid-cols-1 gap-16 2xl:grid-cols-12 2xl:gap-14">
+        <article class="2xl:col-span-8">
           <header class="space-y-7">
             <div class="flex flex-wrap items-center gap-4">
-              <span class="eyebrow">Detalles del proyecto</span>
-              <span class="hidden h-px flex-1 bg-white/10 sm:block"></span>
-              <time class="text-xs font-bold uppercase tracking-[0.14em] text-slate-300">{{ project.period }}</time>
+              <SectionLabel :index="project.number" label="Caso de estudio" />
+              <span class="hidden h-px flex-1 bg-line sm:block"></span>
+              <span class="text-sm text-ink-muted">{{ project.year }}</span>
             </div>
-            <h1 class="display-title uppercase">{{ project.title }}<span class="text-cyan-300/60">.</span></h1>
-            <p class="max-w-3xl text-xl leading-8 text-slate-300 md:text-2xl md:leading-10">{{ project.description }}</p>
+            <h1 class="display-title">{{ project.name }}<span class="text-accent-word">.</span></h1>
+            <p class="max-w-3xl text-xl leading-8 text-ink-body">{{ project.summary }}</p>
+            <div v-if="project.metric" class="flex flex-wrap items-center gap-3">
+              <span class="metric">{{ project.metric }}</span>
+              <DraftTag v-if="project.draft" />
+            </div>
           </header>
 
-          <section class="relative aspect-[16/10] overflow-hidden rounded-3xl border border-white/15 bg-slate-900 shadow-2xl shadow-black/30" aria-label="Galería destacada del proyecto">
-            <TransitionGroup name="carousel">
-              <img v-for="(img, idx) in project.images" v-show="activeImage === idx" :key="img" :src="img" :alt="`Captura ${idx + 1} de ${project.title}`" class="absolute inset-0 h-full w-full object-cover" />
-            </TransitionGroup>
-            <div class="absolute inset-x-0 bottom-0 flex items-end justify-between bg-linear-to-t from-slate-950/80 to-transparent p-4 pt-16 sm:p-6">
-              <div class="flex items-center gap-1.5" aria-hidden="true">
-                <span v-for="(_, idx) in project.images" :key="idx" class="h-1.5 rounded-full transition-all duration-300" :class="activeImage === idx ? 'w-10 bg-cyan-200' : 'w-3 bg-white/45'"></span>
-              </div>
-              <div class="flex gap-2">
-                <button type="button" @click="prev" class="carousel-control" aria-label="Imagen anterior"><ArrowLeft class="h-5 w-5" /></button>
-                <button type="button" @click="next" class="carousel-control" aria-label="Imagen siguiente"><ArrowRight class="h-5 w-5" /></button>
-              </div>
-            </div>
-          </section>
+          <figure v-if="project.cover" class="lead-media mt-14">
+            <ProjectImage
+              :image="project.cover"
+              sizes="(min-width: 1024px) 860px, 100vw"
+              priority
+              class="h-auto w-full"
+            />
+          </figure>
 
-          <section>
-            <span class="eyebrow mb-8">Caso de estudio</span>
-            <div ref="contentRef" class="case-study prose prose-invert prose-lg max-w-none" v-html="project.content"></div>
-          </section>
+          <div class="case-study mt-16 space-y-14">
+            <ScrollReveal v-for="s in before" :key="s.key" as="section">
+              <h2 class="case-h2">{{ s.title }}</h2>
+              <div class="case-body" v-html="s.html"></div>
+            </ScrollReveal>
 
-          <ScrollReveal v-if="project.images.length > 1" as="section">
-            <div class="mb-8 flex items-center gap-5"><h2 class="text-sm font-black uppercase tracking-[0.2em] text-slate-200">Galería</h2><span class="h-px flex-1 bg-white/10"></span></div>
+            <!-- Solo si el proyecto tiene diagrama -->
+            <section v-if="project.arch" aria-labelledby="arquitectura">
+              <h2 id="arquitectura" class="case-h2">Arquitectura</h2>
+              <div class="shot">
+                <div class="shot__frame">
+                  <img
+                    :src="project.arch"
+                    :alt="`Diagrama de arquitectura de ${project.name}`"
+                    loading="lazy"
+                    class="h-auto w-full"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <ScrollReveal v-for="s in after" :key="s.key" as="section" :class="{ 'result-block': s.key === 'resultado' }">
+              <h2 class="case-h2">{{ s.title }}</h2>
+              <div class="case-body" v-html="s.html"></div>
+            </ScrollReveal>
+
+            <ScrollReveal v-for="s in extra" :key="s.title" as="section">
+              <h2 class="case-h2">{{ s.title }}</h2>
+              <div class="case-body" v-html="s.html"></div>
+            </ScrollReveal>
+
+            <!-- Solo si el proyecto tiene demo: archivo de video o ID de YouTube -->
+            <section v-if="project.video">
+              <h2 class="case-h2">Demo</h2>
+              <video
+                v-if="/\.(mp4|webm)$/i.test(project.video)"
+                :src="project.video"
+                controls
+                preload="metadata"
+                class="lead-media w-full"
+              ></video>
+              <YouTubeFacade v-else :video-id="project.video" :title="`Demo de ${project.name}`" />
+            </section>
+          </div>
+
+          <ScrollReveal v-if="project.images.length > 1" as="section" class="mt-20">
+            <div class="mb-8 flex items-center gap-5"><h2 class="case-h2 mb-0">Capturas</h2><span class="h-px flex-1 bg-line"></span></div>
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <figure v-for="(img, idx) in project.images.slice(1)" :key="img" class="group aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-slate-900">
-                <img :src="img" :alt="`Detalle ${idx + 2} de ${project.title}`" loading="lazy" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.035]" />
+              <figure v-for="img in project.images.slice(1)" :key="img.src" class="shot">
+                <div class="shot__frame">
+                  <ProjectImage
+                    :image="img"
+                    sizes="(min-width: 768px) 420px, 100vw"
+                    class="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <figcaption class="mt-3 text-sm leading-relaxed text-ink-muted">{{ img.alt }}</figcaption>
               </figure>
             </div>
           </ScrollReveal>
 
-          <section v-if="project.demo || project.github" class="flex flex-wrap gap-4 border-t border-white/10 pt-10">
-            <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="button-primary group">Ver demo en vivo <ExternalLink class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></a>
-            <a v-if="project.github" :href="project.github" target="_blank" rel="noopener noreferrer" class="button-secondary group">Ver repositorio <Github class="h-4 w-4 transition-transform group-hover:scale-110" /></a>
+          <section v-if="project.links.live || project.links.repo" class="mt-16 flex flex-wrap gap-4 border-t border-line pt-10" aria-label="Enlaces del proyecto">
+            <a v-if="project.links.live" :href="project.links.live" target="_blank" rel="noopener noreferrer" class="button-secondary group">Ver sitio en vivo <ExternalLink class="h-4 w-4" aria-hidden="true" /><span class="sr-only">(abre en otra pestaña)</span></a>
+            <a v-if="project.links.repo" :href="project.links.repo" target="_blank" rel="noopener noreferrer" class="button-secondary group">Ver repositorio <Github class="h-4 w-4" aria-hidden="true" /><span class="sr-only">(abre en otra pestaña)</span></a>
           </section>
-        </main>
+        </article>
 
-        <aside class="lg:col-span-4" aria-label="Metadatos del proyecto">
-          <div class="space-y-6 lg:sticky lg:top-28">
-            <div v-if="projectInfo" class="glass-panel rounded-3xl p-6 sm:p-8">
+        <aside class="2xl:col-span-4" aria-label="Datos del proyecto">
+          <div class="space-y-6 2xl:sticky 2xl:top-6">
+            <div class="glass-panel rounded-feature p-6 sm:p-8">
               <dl class="space-y-6">
-                <div v-for="(value, key) in projectInfo" :key="key" class="border-b border-white/10 pb-5 last:border-0 last:pb-0">
-                  <dt class="mb-1.5 text-xs font-black uppercase tracking-[0.16em] text-cyan-200">{{ key }}</dt>
-                  <dd class="text-base font-semibold leading-6 text-slate-100">{{ value }}</dd>
-                </div>
+                <template v-for="(value, key) in projectInfo" :key="key">
+                  <div v-if="value" class="border-b border-line pb-5 last:border-0 last:pb-0">
+                    <dt class="mb-1 text-sm text-ink-muted">{{ key }}</dt>
+                    <dd class="text-base font-medium leading-6 text-ink-strong">{{ value }}</dd>
+                  </div>
+                </template>
               </dl>
 
-              <div class="mt-7 border-t border-white/10 pt-7">
-                <h2 class="mb-4 text-xs font-black uppercase tracking-[0.16em] text-cyan-200">Tecnologías</h2>
-                <div class="flex flex-wrap gap-2">
-                  <span v-for="tech in project.technologies" :key="tech" class="rounded-full border border-slate-600 bg-slate-900/80 px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-slate-200 transition hover:border-cyan-300/60 hover:text-cyan-100 hover:shadow-[0_0_18px_rgba(34,211,238,0.1)]">{{ tech }}</span>
-                </div>
+              <div class="mt-7 border-t border-line pt-7">
+                <h2 class="mb-4 text-sm text-ink-muted">Stack</h2>
+                <ul class="flex flex-wrap gap-2">
+                  <li v-for="tech in project.stack" :key="tech" class="chip">{{ tech }}</li>
+                </ul>
               </div>
 
-              <details v-if="project.teamSize > 1" class="group mt-7 border-t border-white/10 pt-7">
-                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg text-sm font-bold text-slate-200 marker:hidden hover:text-cyan-200">
-                  <span class="flex items-center gap-2"><Users class="h-4 w-4 text-cyan-300" /> Colaboradores</span>
-                  <span class="text-xs text-slate-400">{{ project.teamSize }} personas</span>
+              <details v-if="meta?.collaborators?.length && (meta.teamSize ?? 0) > 1" class="group mt-7 border-t border-line pt-7">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-lg text-sm font-bold text-ink-strong marker:hidden hover:text-accent-ink">
+                  <span class="flex items-center gap-2"><Users class="h-4 w-4 text-accent-ink" aria-hidden="true" /> Equipo</span>
+                  <span class="text-xs text-ink-muted">{{ meta.teamSize }} personas</span>
                 </summary>
-                <ul v-if="project.collaborators" class="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 border-l border-cyan-300/30 pl-4">
-                  <li v-for="collab in project.collaborators" :key="collab" class="text-sm text-slate-400">{{ collab }}</li>
+                <ul class="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 border-l-2 border-accent pl-4">
+                  <li v-for="collab in meta.collaborators" :key="collab" class="text-sm text-ink-muted">{{ collab }}</li>
                 </ul>
               </details>
             </div>
 
-            <div class="relative overflow-hidden rounded-3xl border border-cyan-300/25 bg-cyan-300/[0.07] p-7">
-              <div aria-hidden="true" class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan-300/15 blur-3xl"></div>
-              <div class="relative">
-                <h2 class="text-xl font-bold text-white">¿Tienes un proyecto similar?</h2>
-                <p class="my-4 text-sm leading-6 text-slate-300">Conversemos sobre el problema, el alcance y la mejor forma de construirlo.</p>
-                <NuxtLink to="/contacto" class="button-primary group w-full">Comencemos ahora <ArrowUpRight class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></NuxtLink>
-              </div>
+            <div class="relative overflow-hidden rounded-feature bg-surface-inverse p-7 text-white">
+              <h2 class="font-display text-2xl font-medium text-white">¿Tienes un problema parecido?</h2>
+              <p class="my-4 text-sm leading-6 text-white/70">Conversemos sobre el problema, el alcance y la mejor forma de construirlo.</p>
+              <NuxtLink to="/contacto" class="button-primary group w-full">Hablemos <ArrowUpRight class="arrow-swap h-4 w-4" aria-hidden="true" /></NuxtLink>
             </div>
           </div>
         </aside>
@@ -153,18 +184,55 @@ const projectInfo = computed(() => project.value ? {
 </template>
 
 <style scoped>
-.carousel-enter-active, .carousel-leave-active { transition: opacity .45s ease, transform .55s cubic-bezier(.22,1,.36,1); }
-.carousel-enter-from { opacity:0; transform:scale(1.02); }
-.carousel-leave-to { opacity:0; }
-.carousel-control { display:flex; width:3rem; height:3rem; align-items:center; justify-content:center; border-radius:999px; border:1px solid rgba(255,255,255,.25); background:rgba(2,6,23,.65); color:white; backdrop-filter:blur(12px); transition:background .2s,border-color .2s,color .2s,transform .2s; }
-.carousel-control:hover { transform:translateY(-2px); border-color:rgba(103,232,249,.65); background:rgba(103,232,249,.95); color:#06202a; }
-.case-study :deep(> *) { opacity:0; transform:translateY(20px); transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1); }
-.case-study :deep(> *.is-visible) { opacity:1; transform:none; }
-.case-study :deep(h2) { margin-top:4rem; margin-bottom:1.25rem; font-size:clamp(1.6rem,3vw,2.25rem); font-weight:800; letter-spacing:-.035em; text-transform:none; }
-.case-study :deep(p), .case-study :deep(li) { color:#b9c5d3; font-size:1.0625rem; line-height:1.8; }
-.case-study :deep(ul) { padding-left:1.2rem; }
-.case-study :deep(li::marker) { color:#67e8f9; }
-.case-study :deep(h2:nth-of-type(4)) { margin-bottom:0; border-left:3px solid #67e8f9; border-radius:1rem 1rem 0 0; background:linear-gradient(90deg,rgba(34,211,238,.11),rgba(34,211,238,.02)); padding:1.6rem 1.75rem .75rem; color:#a5f3fc; }
-.case-study :deep(h2:nth-of-type(4) + p) { margin-top:0; border-left:3px solid #67e8f9; border-radius:0 0 1rem 1rem; background:linear-gradient(90deg,rgba(34,211,238,.11),rgba(34,211,238,.02)); padding:.5rem 1.75rem 1.75rem; color:#dbeafe; }
-@media (prefers-reduced-motion: reduce) { .case-study :deep(> *) { opacity:1; transform:none; } }
+.metric {
+  border-radius: 999px;
+  background: var(--accent);
+  padding: 0.35rem 0.85rem;
+  color: var(--on-accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.lead-media,
+.shot__frame {
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-feature);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
+}
+
+.shot__frame {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-card);
+}
+
+.case-h2 {
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.case-body :deep(p),
+.case-body :deep(li),
+.case-body {
+  color: var(--text-body);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.case-body :deep(p + p) { margin-top: 1rem; }
+.case-body :deep(ul) { display: grid; gap: 0.5rem; padding-left: 1.2rem; list-style: disc; }
+.case-body :deep(li::marker) { color: var(--accent); }
+.case-body :deep(strong) { color: var(--text-strong); }
+
+.result-block {
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-card);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
+  padding: 1.6rem 1.75rem;
+}
 </style>

@@ -1,20 +1,8 @@
 ---
 id: euphoria
-title: Salón de Belleza Euphoria
-description: Una aplicación que permite que el salón tenga una presencia digital, participación y seguimiento activo de sus clientes.
 period: Marzo de 2026 - Actualidad
 team: Solo
-role: Fullstack Developer
-technologies: ["NuxtJS", "Vue 3", "TypeScript", "Node.js", "Tailwind CSS", "API Tiven"]
 location: Oaxaca de Juárez, México
-image: /projects/euphoria/1.png
-images:
-  - /projects/euphoria/1.png
-  - /projects/euphoria/2.png
-  - /projects/euphoria/3.png
-  - /projects/euphoria/4.png
-  - /projects/euphoria/5.png
-demo: https://euphoria-web.pages.dev
 ---
 
 ## Contexto

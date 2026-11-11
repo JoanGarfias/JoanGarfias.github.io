@@ -1,20 +1,16 @@
 <script setup>
-useHead({
-  title: 'Joan Garfias | Desarrollador de Software & Full-stack',
-  meta: [
-    { name: 'description', content: 'Desarrollador Full-stack especializado en crear aplicaciones web modernas, interfaces intuitivas y soluciones tecnológicas eficientes.' }
-  ]
+// Título y descripción globales (nuxt.config.ts); aquí solo se fijan para la home
+useSeoMeta({
+  title: 'Joan Garfias | Desarrollador de Software · Backend & Cloud'
 })
 </script>
 
 <template>
-  <div class="overflow-x-hidden">
+  <div>
     <Hero />
-    <div class="site-container">
-      <ScrollReveal><ProjectGrid /></ScrollReveal>
-      <ScrollReveal><Skills /></ScrollReveal>
-    </div>
+    <ProjectGrid />
     <ScrollReveal><AboutMe /></ScrollReveal>
-    <div class="site-container"><ScrollReveal><Contact /></ScrollReveal></div>
+    <CommunitySection />
+    <ScrollReveal><Contact /></ScrollReveal>
   </div>
 </template>

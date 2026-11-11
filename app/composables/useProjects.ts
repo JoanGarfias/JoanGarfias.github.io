@@ -6,72 +6,64 @@ if (typeof window !== 'undefined') {
   (window as any).Buffer = Buffer;
 }
 
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  period: string;
-  team: string;
+export interface CaseStudyMeta {
+  period?: string;
+  team?: string;
   teamSize?: number;
   collaborators?: string[];
-  role: string;
-  technologies: string[];
-  location: string;
-  image: string;
-  images: string[];
-  content: string;
-  demo?: string;
-  github?: string;
+  location?: string;
 }
 
+export interface CaseStudySection {
+  key: 'contexto' | 'problema' | 'solucion' | 'rol' | 'decisiones' | 'retos' | 'resultado' | 'otro';
+  title: string;
+  html: string;
+}
+
+export interface CaseStudy {
+  meta: CaseStudyMeta;
+  sections: CaseStudySection[];
+}
+
+// "## Qué hice yo" → 'rol', "## Resultado esperado" → 'resultado', etc.
+const sectionKey = (title: string): CaseStudySection['key'] => {
+  const t = title.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  if (t.startsWith('contexto')) return 'contexto';
+  if (t.startsWith('problema')) return 'problema';
+  if (t.startsWith('solucion')) return 'solucion';
+  if (t.startsWith('que hice') || t.startsWith('que hago')) return 'rol';
+  if (t.startsWith('decisiones')) return 'decisiones';
+  if (t.startsWith('retos')) return 'retos';
+  if (t.startsWith('resultado')) return 'resultado';
+  return 'otro';
+};
+
+const files = import.meta.glob('../content/proyectos/*.md', {
+  query: '?raw',
+  eager: true,
+  import: 'default'
+});
+
 export const useProjects = () => {
-  const getProjectById = async (id: string): Promise<Project | null> => {
-    try {
-      const files = import.meta.glob('../content/proyectos/*.md', {
-        query: '?raw',
-        eager: true,
-        import: 'default'
-      });
-      const filePath = `../content/proyectos/${id}.md`;
-      const rawContent = files[filePath];
+  // Cuerpo del caso de estudio (content/proyectos/{slug}.md) dividido por sus secciones "## "
+  const getCaseStudy = async (slug: string): Promise<CaseStudy | null> => {
+    const rawContent = files[`../content/proyectos/${slug}.md`];
+    if (!rawContent) return null;
 
-      if (!rawContent) return null;
+    const { data, content } = matter(rawContent as string);
+    const sections: CaseStudySection[] = [];
 
-      const { data, content } = matter(rawContent as string);
-      const htmlContent = await marked.parse(content);
-
-      return {
-        ...(data as any),
-        content: htmlContent
-      } as Project;
-    } catch (e) {
-      console.error("Error loading project:", e);
-      return null;
+    for (const token of marked.lexer(content)) {
+      if (token.type === 'heading' && token.depth === 2) {
+        const title = token.text.replace(/:\s*$/, '').trim();
+        sections.push({ key: sectionKey(title), title, html: '' });
+      } else if (sections.length) {
+        sections[sections.length - 1]!.html += await marked.parse(token.raw);
+      }
     }
+
+    return { meta: data as CaseStudyMeta, sections };
   };
 
-  const getAllProjects = async (): Promise<Project[]> => {
-    try {
-      const files = import.meta.glob('../content/proyectos/*.md', {
-        query: '?raw',
-        eager: true,
-        import: 'default'
-      });
-      return Object.entries(files).map(([_, rawContent]) => {
-        const { data, content } = matter(rawContent as string);
-        return {
-          ...(data as any),
-          content: content // No parseado a HTML para listas
-        } as Project;
-      });
-    } catch (e) {
-      console.error("Error loading all projects:", e);
-      return [];
-    }
-  };
-
-  return {
-    getProjectById,
-    getAllProjects
-  };
+  return { getCaseStudy };
 };
