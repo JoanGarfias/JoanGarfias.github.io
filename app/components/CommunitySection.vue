@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ArrowRight, ExternalLink } from 'lucide-vue-next'
-import { communityIntro, googleAmbassador, nexis } from '~/content/community'
+import { communityIntro, eventsAttended, googleAmbassador, nexis } from '~/content/community'
 import { communityEventsJsonLd } from '~/composables/useCommunity'
 
 const { showPending } = usePending()
@@ -36,6 +36,9 @@ if (events.length) {
         </dd>
       </div>
     </dl>
+    <p v-if="counters.some(c => c.value !== null)" class="mt-3 text-sm text-ink-muted">
+      Solo cuentan los eventos donde fui ponente, tallerista, moderador u organizador.
+    </p>
 
     <!-- 2. Destacado -->
     <ScrollReveal v-if="featured" class="mt-12">
@@ -45,6 +48,11 @@ if (events.length) {
     <!-- 3. Línea de tiempo -->
     <ScrollReveal v-if="given.length" class="mt-16">
       <CommunityTimeline :entries="given" />
+    </ScrollReveal>
+
+    <!-- 3b. Eventos a los que asisto (fuera de las cifras) -->
+    <ScrollReveal v-if="eventsAttended.length" class="mt-16">
+      <CommunityAttended :events="eventsAttended" />
     </ScrollReveal>
 
     <!-- 4. Nexis Oaxaca Tech -->

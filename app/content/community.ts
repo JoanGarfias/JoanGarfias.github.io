@@ -151,6 +151,23 @@ export const nexis = {
   photo: 'nexis/foto_grupal.jpg' as string | null
 }
 
+// Eventos a los que asisto o me invitan (juez, invitado, asistente).
+// Van en su propio bloque y NO se suman a los contadores (personas alcanzadas, charlas, etc.).
+export interface AttendedEvent {
+  title: string
+  role: string // ej. "Asistente", "Juez de apoyo", "Invitado"
+  city?: string
+  date?: string // ISO "2026-04-21" o solo año "2026"
+  url?: string
+  photo?: string // ej. "/community/asistidos/talent-land.jpg" (horizontal); sin foto la tarjeta va sin imagen
+}
+
+export const eventsAttended: AttendedEvent[] = [
+  { title: 'Robomatrix', role: 'Juez de apoyo' },
+  { title: 'Talent Land 2026', role: 'Asistente' },
+  { title: 'AWS Summit CDMX 2026', role: 'Asistente', city: 'Ciudad de México' }
+]
+
 // Otros roles en comunidad (se muestran junto a Nexis)
 export const googleAmbassador = {
   name: 'Estudiantes Embajadores de Google',

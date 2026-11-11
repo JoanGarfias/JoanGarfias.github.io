@@ -7,7 +7,7 @@ export const aboutQuote =
 
 export const aboutParagraphs: { text: string; draft?: boolean }[] = [
   {
-    text: 'Soy desarrollador backend y cloud (Laravel, PHP, Vue, Docker, AWS) y he trabajado en sistemas para salud, construcción, hotelería y transporte. Disfruto entender un problema a fondo, diseñar la solución y llevarla a producción, cada vez más con agentes de IA como parte de mi forma de trabajar.'
+    text: 'He trabajado en sistemas para salud, construcción, hotelería y transporte. Disfruto entender un problema a fondo, diseñar la solución y llevarla a producción.'
   },
   {
     text: 'Me interesan los roles donde la tecnología y las personas se cruzan: ingeniería de software, developer relations, soluciones técnicas y producto.'
@@ -17,10 +17,9 @@ export const aboutParagraphs: { text: string; draft?: boolean }[] = [
   }
 ]
 
-// Credenciales bajo los párrafos (icon: archivo en /public/icons, opcional; wide: logotipo horizontal sobre fondo blanco)
+// Credenciales que no aparecen antes en la página (AWS, Google y Nexis ya se ven en el hero y en Stack)
+// icon: archivo en /public/icons, opcional; wide: logotipo horizontal sobre fondo blanco
 export const aboutCredentials: { label: string; icon?: string; iconAlt?: string; wide?: boolean }[] = [
-  { label: 'AWS Certified Cloud Practitioner', icon: 'aws.svg' },
-  { label: 'Estudiante Embajador de Google 2026', icon: 'google.svg' },
   { label: 'INROADER', icon: 'inroads-mexico.png', iconAlt: 'INROADS México', wide: true }
 ]
 
