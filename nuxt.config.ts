@@ -10,11 +10,13 @@ const SITE_DESCRIPTION = 'Construyo software con propósito desde Oaxaca, Méxic
 const projectRoutes = projects.map(p => p.links.caseStudy)
 
 export default defineNuxtConfig({
+  ssr: true,
   compatibilityDate: '2026-04-03',
   devtools: { enabled: true },
   routeRules: {
     // El stack ahora vive dentro de Proyectos
-    '/habilidades': { redirect: { to: '/#stack', statusCode: 301 } }
+    '/habilidades': { redirect: { to: '/#stack', statusCode: 301 } },
+    '/**': { prerender: true }
   },
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
