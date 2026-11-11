@@ -1,2 +1,5 @@
-User-Agent: *
-Disallow:
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://www.joangarfias.me/sitemap.xml
