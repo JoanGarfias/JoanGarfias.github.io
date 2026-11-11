@@ -44,7 +44,7 @@ export const projects: Project[] = [
     decision: 'Construí la API REST en Laravel sobre PostgreSQL para garantizar integridad en los datos de ventas, inventario y puntos.',
     result: 'Una plataforma estable que redujo el tiempo administrativo de los usuarios activos.',
     metric: '−30% tiempo administrativo',
-    stack: ['Laravel', 'PHP', 'PostgreSQL', 'Docker', 'Vue.js', 'Astro'],
+    stack: ['Laravel', 'PHP', 'PostgreSQL', 'Docker', 'AWS', 'Vue.js', 'Astro'],
     cover: null,
     images: [
       { src: '/projects/tiven/1.png', width: 1270, height: 936, alt: 'Portada de Tiven: “No pierdas citas por no poder contestar”, con el flujo de reserva en un celular' },
