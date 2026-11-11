@@ -154,7 +154,7 @@ const emptyForm = () => ({
   email: '',
   subject: 'proyecto',
   message: '',
-  lock: 'this-is-a-valid-frontend-request' // Se enviará como cadena oculta
+  lock: '' // Honeypot: debe llegar vacío; si un bot lo llena, la API descarta el mensaje
 })
 
 const form = ref(emptyForm())

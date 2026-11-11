@@ -4,3 +4,4 @@ node_modules/
 --open
 dist/
 public/_optimized/
+.env
