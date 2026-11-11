@@ -1,13 +1,12 @@
 <template>
   <section id="contacto" class="section-space relative">
-    <div class="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-24">
-      <!-- "COLABORAR." ≈ 5.8em de ancho -->
-      <div class="title-fit lg:col-span-5" style="--title-fit: 16.4cqi">
-        <span class="eyebrow mb-5">Contacto</span>
-        <component :is="titleTag" class="display-title mb-8 uppercase">
-          Vamos a <br class="hidden lg:block"> <span class="text-ink-title-2">colaborar.</span>
+    <div class="grid grid-cols-1 gap-12 xl:grid-cols-12 xl:gap-14">
+      <div class="xl:col-span-5">
+        <SectionLabel index="05" label="Contacto" />
+        <component :is="titleTag" class="section-title mb-6 mt-6">
+          Vamos a <span class="text-accent-word">colaborar.</span>
         </component>
-        <p class="text-lg leading-relaxed text-ink-body md:text-xl">
+        <p class="text-lg leading-relaxed text-ink-body">
           ¿Tienes un proyecto, una vacante o un evento? Escríbeme y te respondo.
         </p>
 
@@ -15,25 +14,25 @@
           <li v-for="channel in channels" :key="channel.label" class="border-b border-line">
             <a :href="channel.link" :target="channel.external ? '_blank' : undefined" :rel="channel.external ? 'noopener noreferrer' : undefined" class="channel group">
               <span class="flex items-center gap-4">
-                <component :is="channel.icon" class="h-5 w-5 text-ink-muted transition-colors group-hover:text-accent" aria-hidden="true" />
-                <span class="text-xs font-black uppercase tracking-widest text-ink-body">{{ channel.label }}</span>
+                <component :is="channel.icon" class="h-5 w-5 text-ink-muted transition-colors group-hover:text-accent-ink" aria-hidden="true" />
+                <span class="text-sm text-ink-muted">{{ channel.label }}</span>
               </span>
-              <span class="text-sm font-bold text-ink-strong transition-transform group-hover:translate-x-1">
+              <span class="text-sm font-medium text-ink-strong transition-transform group-hover:translate-x-1">
                 {{ channel.value }}<span v-if="channel.external" class="sr-only"> (abre en otra pestaña)</span>
               </span>
             </a>
           </li>
         </ul>
 
-        <a href="/cv.pdf" download="CV_Joan_Garfias.pdf" class="mt-8 inline-flex items-center gap-2 text-sm font-bold text-accent hover:text-accent-strong">
+        <a href="/cv.pdf" download="CV_Joan_Garfias.pdf" class="button-secondary mt-8">
           <LucideDownload class="h-4 w-4" aria-hidden="true" />
           Descargar CV (PDF)
         </a>
       </div>
 
-      <div class="w-full max-w-full lg:col-span-7">
-        <form novalidate class="glass-panel relative w-full space-y-8 rounded-feature p-6 md:space-y-10 md:p-10" @submit.prevent="handleSubmit">
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
+      <div class="w-full max-w-full xl:col-span-7">
+        <form novalidate class="card relative w-full space-y-6 rounded-feature p-5 md:p-8" @submit.prevent="handleSubmit">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div class="space-y-2">
               <label for="name" class="field-label">Nombre</label>
               <input
@@ -106,7 +105,7 @@
           <button
             type="submit"
             :disabled="isPending"
-            class="button-primary group w-full py-4 uppercase tracking-[0.16em] disabled:cursor-not-allowed disabled:opacity-60 md:py-5"
+            class="button-primary group w-full py-4 disabled:cursor-not-allowed disabled:opacity-60"
           >
             <template v-if="isPending">
               Enviando…
@@ -114,7 +113,7 @@
             </template>
             <template v-else>
               Enviar mensaje
-              <LucideSend class="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+              <LucideSend class="arrow-swap h-4 w-4" aria-hidden="true" />
             </template>
           </button>
 
@@ -130,7 +129,7 @@
               <LucideAlertCircle class="h-5 w-5 shrink-0" aria-hidden="true" />
               <span>
                 {{ error }} Intenta de nuevo o escríbeme directo a
-                <a :href="`mailto:${CONTACT_EMAIL}`" class="font-bold underline underline-offset-2">{{ CONTACT_EMAIL }}</a>.
+                <a :href="`mailto:${CONTACT_EMAIL}`" class="font-bold underline underline-offset-2">Envíame un correo</a>.
               </span>
             </p>
           </div>
@@ -210,7 +209,7 @@ const handleSubmit = async () => {
 }
 
 const channels = [
-  { label: 'Email', value: CONTACT_EMAIL, link: `mailto:${CONTACT_EMAIL}`, icon: LucideMail, external: false },
+  { label: 'Email', value: 'Envíame un correo', link: `mailto:${CONTACT_EMAIL}`, icon: LucideMail, external: false },
   { label: 'LinkedIn', value: 'joangarfias', link: 'https://linkedin.com/in/joangarfias', icon: LucideLinkedin, external: true }
 ]
 </script>
@@ -227,46 +226,48 @@ const channels = [
 
 .field-label {
   margin-left: 0.25rem;
-  color: var(--text-body);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  color: var(--text-strong);
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 
 .field {
   width: 100%;
-  border: 0;
-  border-bottom: 2px solid #64748b;
-  background: transparent;
-  padding-block: 0.85rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-card-sm);
+  background: var(--surface-2);
+  padding: 0.85rem 1rem;
   color: var(--text-strong);
-  font-size: 1.0625rem;
-  font-weight: 600;
-  transition: border-color 180ms var(--ease-brand);
+  font-size: 1rem;
+  transition: border-color 180ms var(--ease-brand), background-color 180ms var(--ease-brand), box-shadow 180ms var(--ease-brand);
 }
 
-.field::placeholder { color: var(--text-muted); font-weight: 500; }
-.field:focus { border-color: var(--cyan); }
+.field::placeholder { color: var(--text-muted); }
+.field:hover { border-color: var(--border-strong); }
+.field:focus {
+  border-color: var(--text-strong);
+  background: var(--surface-1);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
 .field:disabled { opacity: 0.6; }
-.field[aria-invalid="true"] { border-color: #fca5a5; }
+.field[aria-invalid="true"] { border-color: var(--danger); }
 
 .field-select {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--cyan-soft) 50%), linear-gradient(135deg, var(--cyan-soft) 50%, transparent 50%);
-  background-position: calc(100% - 14px) 50%, calc(100% - 8px) 50%;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-strong) 50%), linear-gradient(135deg, var(--text-strong) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
   background-repeat: no-repeat;
   background-size: 6px 6px;
   cursor: pointer;
 }
 
-.field-select option { background: var(--surface-2); color: var(--text-strong); }
+.field-select option { background: var(--surface-1); color: var(--text-strong); }
 
 .field-error {
   margin-left: 0.25rem;
-  color: #fca5a5;
+  color: var(--danger);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .status {
@@ -281,14 +282,14 @@ const channels = [
 }
 
 .status--success {
-  border: 1px solid rgba(110, 231, 183, 0.35);
-  background: rgba(110, 231, 183, 0.1);
-  color: var(--green-status);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
 }
 
 .status--error {
-  border: 1px solid rgba(252, 165, 165, 0.35);
-  background: rgba(252, 165, 165, 0.1);
-  color: #fecaca;
+  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 </style>

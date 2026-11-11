@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ArrowRight, ExternalLink, MapPin } from 'lucide-vue-next'
-import { communityIntro, nexis, youtube } from '~/content/community'
-import { communityEventsJsonLd, formatEventDate } from '~/composables/useCommunity'
+import { ArrowRight, ExternalLink } from 'lucide-vue-next'
+import { communityIntro, googleAmbassador, nexis } from '~/content/community'
+import { communityEventsJsonLd } from '~/composables/useCommunity'
 
 const { showPending } = usePending()
-const { given, attended, featured, counters, real } = useCommunity()
+const { given, featured, counters, real } = useCommunity()
 
 // Solo las charlas/talleres reales generan datos estructurados de evento
-const events = communityEventsJsonLd(real.value)
+const { siteUrl } = useRuntimeConfig().public
+const events = communityEventsJsonLd(real.value, siteUrl)
 if (events.length) {
   useHead({ script: events.map(e => ({ type: 'application/ld+json', innerHTML: JSON.stringify(e) })) })
 }
@@ -15,16 +16,12 @@ if (events.length) {
 
 <template>
   <section id="comunidad" class="section-space">
-    <header class="mb-14 grid gap-6 border-b border-line pb-10 md:grid-cols-[1fr_26rem] md:items-end">
-      <div>
-        <span class="eyebrow mb-5">Comunidad</span>
-        <h2 class="display-title uppercase">
-          Aprender.<br>
-          <span class="text-ink-title-2">Construir.</span><br>
-          <span class="text-gradient">Compartir.</span>
-        </h2>
-      </div>
-      <p v-if="communityIntro || showPending" class="section-copy md:justify-self-end">
+    <header class="mb-12">
+      <SectionLabel index="04" label="Comunidad" />
+      <h2 class="section-title mt-6">
+        Aprender. Construir. <span class="text-accent-word">Compartir.</span>
+      </h2>
+      <p v-if="communityIntro || showPending" class="section-copy mt-4">
         <ContentText :value="communityIntro" label="por qué me importa la comunidad tech en Oaxaca (1–2 frases)" />
       </p>
     </header>
@@ -33,8 +30,8 @@ if (events.length) {
     <dl v-if="counters.length && (showPending || counters.some(c => c.value !== null))" class="counters">
       <div v-for="c in counters" :key="c.key" class="counter">
         <dt class="text-sm font-semibold text-ink-muted">{{ c.label }}</dt>
-        <dd class="mt-2" :class="c.value !== null ? 'text-4xl font-extrabold tracking-tight text-ink-strong md:text-5xl' : 'text-sm'">
-          <template v-if="c.value !== null">{{ c.approx ? '~' : '' }}{{ c.value }}</template>
+        <dd class="mt-2" :class="c.value !== null ? 'font-display text-5xl font-medium tracking-tight text-ink-strong' : 'text-sm'">
+          <template v-if="c.value !== null">{{ c.approx ? '~' : '' }}<CountUp :value="c.value" /></template>
           <PendingText v-else :label="c.label.toLowerCase()" type="dato" />
         </dd>
       </div>
@@ -58,10 +55,10 @@ if (events.length) {
           <PendingSlot v-else type="foto" ratio="16/9" label="Foto grupal de un evento de Nexis" hint="Horizontal, mín. 1600×900px, JPG/WebP" />
         </div>
         <div class="flex flex-col gap-5 p-6 sm:p-8">
-          <img src="/nexis.svg" alt="Nexis Oaxaca Tech" width="56" height="56" class="nexis__logo" />
+          <img src="/nexis-green.svg" alt="Nexis Oaxaca Tech" width="56" height="56" class="nexis__logo" />
           <div>
             <p class="eyebrow">{{ nexis.role }}</p>
-            <h3 class="mt-3 text-3xl font-extrabold tracking-tight">{{ nexis.name }}</h3>
+            <h3 class="mt-3 font-display text-3xl font-medium tracking-tight">{{ nexis.name }}</h3>
           </div>
           <p class="text-lg leading-relaxed text-ink-body">{{ nexis.description }}</p>
           <p v-if="nexis.participation || showPending" class="leading-relaxed text-ink-body">
@@ -70,14 +67,14 @@ if (events.length) {
           <dl v-if="nexis.members || nexis.events || showPending" class="grid grid-cols-2 gap-4">
             <div>
               <dt class="text-sm text-ink-muted">Miembros</dt>
-              <dd class="text-2xl font-extrabold text-ink-strong"><ContentText :value="nexis.members" label="miembros" type="dato" /></dd>
+              <dd class="font-display text-3xl font-medium text-ink-strong"><ContentText :value="nexis.members" label="miembros" type="dato" /></dd>
             </div>
             <div>
               <dt class="text-sm text-ink-muted">Eventos</dt>
-              <dd class="text-2xl font-extrabold text-ink-strong"><ContentText :value="nexis.events" label="eventos" type="dato" /></dd>
+              <dd class="font-display text-3xl font-medium text-ink-strong"><ContentText :value="nexis.events" label="eventos" type="dato" /></dd>
             </div>
           </dl>
-          <a v-if="nexis.url" :href="nexis.url" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 font-bold text-accent hover:text-accent-strong">
+          <a v-if="nexis.url" :href="nexis.url" target="_blank" rel="noopener noreferrer" class="text-link">
             Conoce la comunidad <ExternalLink class="h-4 w-4" aria-hidden="true" /><span class="sr-only">(abre en otra pestaña)</span>
           </a>
           <p v-else-if="showPending"><PendingText label="link a Nexis Oaxaca Tech" type="link" /></p>
@@ -85,41 +82,24 @@ if (events.length) {
       </article>
     </ScrollReveal>
 
-    <div class="mt-20 grid gap-10 lg:grid-cols-12">
-      <!-- 5. YouTube -->
-      <ScrollReveal class="lg:col-span-7">
-        <h3 class="mb-5 text-sm font-black uppercase tracking-[0.18em] text-ink-strong">En YouTube</h3>
-        <YouTubeFacade v-if="youtube.videoId" :video-id="youtube.videoId" :title="youtube.videoTitle ?? 'Video destacado de joan_dev'" />
-        <PendingSlot v-else-if="showPending" type="video" ratio="16/9" label="Video destacado de YouTube (pegar ID)" hint="app/content/community.ts → youtube.videoId" />
-        <a :href="youtube.channel" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 font-bold text-accent hover:text-accent-strong">
-          Ver canal {{ youtube.handle }} <ExternalLink class="h-4 w-4" aria-hidden="true" /><span class="sr-only">(abre en otra pestaña)</span>
-        </a>
-      </ScrollReveal>
+    <!-- 5. Estudiantes Embajadores de Google -->
+    <ScrollReveal class="mt-6">
+      <article class="ambassador">
+        <span class="ambassador__logo"><img :src="googleAmbassador.logo" alt="Google" width="32" height="32" class="h-8 w-8" /></span>
+        <div class="min-w-0">
+          <p class="eyebrow">{{ googleAmbassador.role }}</p>
+          <h3 class="mt-2 font-display text-2xl font-medium tracking-tight">{{ googleAmbassador.name }}</h3>
+          <p class="mt-2 leading-relaxed text-ink-body">{{ googleAmbassador.description }}</p>
+        </div>
+      </article>
+    </ScrollReveal>
 
-      <!-- 6. Dónde me encuentras -->
-      <ScrollReveal v-if="attended.length" class="lg:col-span-5">
-        <h3 class="mb-2 text-sm font-black uppercase tracking-[0.18em] text-ink-strong">Dónde me encuentras</h3>
-        <p class="mb-5 text-sm text-ink-muted">Eventos a los que asisto como participante.</p>
-        <ul class="divide-y divide-line border-y border-line">
-          <li v-for="entry in attended" :key="entry.id" class="flex items-start gap-3 py-4">
-            <MapPin class="mt-1 h-4 w-4 shrink-0 text-ink-title-2" aria-hidden="true" />
-            <div class="min-w-0 text-[0.9375rem]">
-              <p class="text-ink-body"><ContentText :value="entry.title" /></p>
-              <p class="mt-0.5 font-meta text-xs text-ink-muted">
-                <ContentText :value="entry.city" /> · <ContentText :value="formatEventDate(entry.date)" label="fecha" type="dato" />
-              </p>
-            </div>
-          </li>
-        </ul>
-      </ScrollReveal>
-    </div>
-
-    <!-- 7. CTA secundario -->
+    <!-- 6. CTA secundario -->
     <div class="mt-16 flex flex-wrap items-center gap-4 border-t border-line pt-10">
       <p class="text-lg text-ink-body">¿Organizas un meetup, una clase o un hackathon?</p>
-      <NuxtLink to="/contacto?asunto=evento" class="button-secondary group">
+      <NuxtLink to="/contacto?asunto=evento" class="button-dark group">
         Invítame a tu evento
-        <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+        <ArrowRight class="arrow-swap h-4 w-4" aria-hidden="true" />
       </NuxtLink>
     </div>
   </section>
@@ -139,7 +119,8 @@ if (events.length) {
 .counter {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
-  background: var(--gradient-glass);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
   padding: 1.25rem 1.5rem;
 }
 
@@ -147,8 +128,9 @@ if (events.length) {
   display: grid;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-card);
-  background: var(--gradient-glass);
+  border-radius: var(--radius-feature);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
 }
 
 @media (min-width: 1024px) {
@@ -157,14 +139,52 @@ if (events.length) {
 
 .nexis__media {
   --pending-radius: 0;
-  background: var(--surface-1);
+  background: var(--surface-2);
 }
 
-/* Identidad de Nexis solo en monocromo: sin sus colores */
+/* Logo en el verde de Nexis (#2D8380); en tema oscuro, el mismo verde más claro */
 .nexis__logo {
   width: 3.5rem;
   height: 3.5rem;
-  filter: grayscale(1) brightness(0) invert(1);
-  opacity: 0.85;
 }
+
+:root[data-theme="dark"] .nexis__logo { filter: brightness(1.7); }
+
+.ambassador {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1.25rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-feature);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+
+/* El logo de Google va sobre blanco en ambos temas para conservar sus colores */
+.ambassador__logo {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-strong);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.text-link:hover { color: var(--accent-ink); }
 </style>

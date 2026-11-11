@@ -40,6 +40,6 @@ const accentEnd = Math.floor(BARS * 0.58)
   height: 3rem;
 }
 
-.wave-divider__bar { fill: var(--border-subtle); }
-.wave-divider__accent { fill: var(--cyan); opacity: 0.75; }
+.wave-divider__bar { fill: var(--border-strong); }
+.wave-divider__accent { fill: var(--accent); }
 </style>

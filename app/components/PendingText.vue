@@ -13,11 +13,11 @@ const { showPending } = usePending()
 
 <style scoped>
 .pending-text {
-  border-bottom: 1px dotted var(--cyan-soft);
+  border-bottom: 1px dotted var(--accent-ink);
   border-radius: 0.25rem 0.25rem 0 0;
-  background: rgba(103, 232, 249, 0.12);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
   padding: 0.05em 0.3em;
-  color: var(--cyan-soft);
+  color: var(--accent-ink);
   font-family: var(--font-meta);
   font-size: 0.92em;
   font-style: normal;

@@ -13,9 +13,6 @@ const { siteUrl } = useRuntimeConfig().public
 const canonicalUrl = computed(() => `${siteUrl}${route.path === '/' ? '/' : route.path.replace(/\/$/, '')}`)
 
 useHead({
-  htmlAttrs: {
-    class: computed(() => (appConfig.brandFonts ? 'brand-fonts' : undefined))
-  },
   link: [{ rel: 'canonical', href: canonicalUrl }],
   meta: [
     { property: 'og:url', content: canonicalUrl },

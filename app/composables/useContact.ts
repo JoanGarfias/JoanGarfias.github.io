@@ -2,7 +2,7 @@
 // La API recibe { name, email, message, lock }; el asunto viaja al inicio del mensaje
 // hasta que la API acepte un campo `subject` (ver PENDIENTES.md).
 export const CONTACT_ENDPOINT = 'https://portfolio-email-api-delta.vercel.app/api/contacto'
-export const CONTACT_EMAIL = 'joanpagarfk@gmail.com'
+export const CONTACT_EMAIL = 'joanpagarfpf@gmail.com'
 
 export const contactSubjects = [
   { value: 'proyecto', label: 'Proyecto' },

@@ -1,12 +1,8 @@
 <script setup>
-definePageMeta({
-  layout: 'content'
-})
-
 useHead({
   title: 'Proyectos | Joan Garfias',
   meta: [
-    { name: 'description', content: 'Casos de estudio de software que he construido: backend, cloud y producto web para negocios reales.' }
+    { name: 'description', content: 'Casos de estudio de software que he construido: backend, cloud y producto web para negocios e instituciones de mi región.' }
   ]
 })
 </script>

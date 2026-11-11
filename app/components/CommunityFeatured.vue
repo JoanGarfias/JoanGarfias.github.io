@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOpen, Github, Presentation, Youtube } from 'lucide-vue-next'
+import { BookOpen, ExternalLink, Github, Presentation, Youtube } from 'lucide-vue-next'
 import { roleLabels, typeLabels, type CommunityEntry } from '~/content/community'
 import { formatEventDate } from '~/composables/useCommunity'
 
@@ -10,7 +10,8 @@ const resources = computed(() => [
   { key: 'slides', label: 'Slides', icon: Presentation, url: props.entry.resources?.slides },
   { key: 'repo', label: 'Repositorio', icon: Github, url: props.entry.resources?.repo },
   { key: 'video', label: 'Video', icon: Youtube, url: props.entry.resources?.video },
-  { key: 'post', label: 'Artículo', icon: BookOpen, url: props.entry.resources?.post }
+  { key: 'post', label: 'Artículo', icon: BookOpen, url: props.entry.resources?.post },
+  { key: 'event', label: 'Ver encuentro', icon: ExternalLink, url: props.entry.url }
 ].filter(r => r.url))
 </script>
 
@@ -35,7 +36,7 @@ const resources = computed(() => [
 
     <div class="flex flex-col gap-5 p-6 sm:p-8">
       <p class="eyebrow">Destacado · {{ typeLabels[entry.type] }}</p>
-      <component :is="props.titleTag ?? 'h3'" class="text-2xl font-extrabold leading-tight tracking-tight md:text-3xl">
+      <component :is="props.titleTag ?? 'h3'" class="font-display text-2xl font-medium leading-tight tracking-tight md:text-3xl">
         <ContentText :value="entry.title" />
       </component>
       <p class="font-meta text-sm text-ink-muted">
@@ -76,7 +77,8 @@ const resources = computed(() => [
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-feature);
-  background: var(--gradient-glass);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-card);
 }
 
 @media (min-width: 1024px) {
@@ -86,16 +88,13 @@ const resources = computed(() => [
 .featured-talk__media {
   --pending-radius: 0;
   height: 100%;
-  background: var(--surface-1);
+  background: var(--surface-2);
 }
 
 .dl-term {
   margin-bottom: 0.2rem;
-  color: var(--cyan-soft);
-  font-family: var(--font-meta);
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  color: var(--text-strong);
+  font-size: 0.8125rem;
+  font-weight: 600;
 }
 </style>

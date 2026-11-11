@@ -1,7 +1,6 @@
 // Datos estructurados de los proyectos. El cuerpo del caso de estudio vive en content/proyectos/{slug}.md.
-// draft: true → problem/decision/result/metric son borradores redactados a partir del .md y se marcan
-// "[BORRADOR – VALIDAR]" mientras NUXT_PUBLIC_SHOW_PENDING esté activo. Cámbialo a false al validarlos.
-// null → contenido pendiente (se muestra con PendingText / PendingSlot).
+// draft: true → marca problem/decision/result/metric como "[BORRADOR – VALIDAR]" (hoy todos están validados).
+// arch / video: solo se muestran en el caso de estudio si existen.
 
 export interface ProjectImage {
   src: string
@@ -22,6 +21,7 @@ export interface Project {
   problem: string | null
   decision: string | null
   result: string | null
+  arch?: string | null
   metric?: string | null
   stack: string[]
   cover: ProjectImage | null
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     year: '2025 – hoy',
     role: 'Backend Developer',
     featured: true,
-    draft: true,
+    draft: false,
     problem: 'Los salones llevaban reservas, inventario y fidelización en papel o en varios Excel, y perdían citas y control del stock.',
     decision: 'Construí la API REST en Laravel sobre PostgreSQL para garantizar integridad en los datos de ventas, inventario y puntos.',
     result: 'Una plataforma estable que redujo el tiempo administrativo de los usuarios activos.',
@@ -47,9 +47,9 @@ export const projects: Project[] = [
     stack: ['Laravel', 'PHP', 'PostgreSQL', 'Docker', 'Vue.js', 'Astro'],
     cover: null,
     images: [
-      { src: '/projects/tiven/1.png', width: 1876, height: 970, alt: 'Página principal de Tiven: “Tu salón de belleza en tu bolsillo, 24/7” con la app en una computadora' },
-      { src: '/projects/tiven/2.png', width: 1586, height: 903, alt: 'Panel de Tiven con ingresos, citas de hoy, citas completadas y próximas citas del negocio' },
-      { src: '/projects/tiven/3.png', width: 1574, height: 910, alt: 'Gráfica de ingresos por día de los últimos 30 días en Tiven' }
+      { src: '/projects/tiven/1.png', width: 1270, height: 936, alt: 'Portada de Tiven: “No pierdas citas por no poder contestar”, con el flujo de reserva en un celular' },
+      { src: '/projects/tiven/2.png', width: 1113, height: 682, alt: 'Enlace de reservas de Tiven para compartir en WhatsApp, Instagram, Facebook, Google o con un código QR' },
+      { src: '/projects/tiven/3.png', width: 1498, height: 830, alt: 'Módulo de finanzas en móvil: movimientos, histórico de cortes y resultado financiero con comisiones por empleado' }
     ],
     links: { live: 'https://tiven.app', caseStudy: '/proyectos/tiven' }
   },
@@ -61,12 +61,13 @@ export const projects: Project[] = [
     year: '2026',
     role: 'Fullstack Developer',
     featured: true,
-    draft: true,
+    draft: false,
     problem: 'La seguridad del condominio era reactiva, y los reportes de incidentes, la comunicación y las finanzas eran lentos y poco transparentes.',
     decision: 'Backend en NestJS, Prisma y PostgreSQL con Docker en un VPS; armé el CI/CD con GitHub Actions y los entornos de prueba.',
     result: 'Entregamos por sprints los módulos de seguridad, incidentes y control de accesos, y estabilizamos el entorno de QA.',
     metric: null,
-    stack: ['NestJS', 'PostgreSQL', 'Docker', 'GitHub Actions', 'Cloudflare R2', 'Next.js', 'React', 'Tailwind CSS'],
+    arch: '/projects/civitas/arquitectura.png',
+    stack: ['NestJS', 'PostgreSQL', 'Docker', 'GitHub Actions', 'Cloudflare R2', 'Stripe', 'Next.js', 'React', 'Tailwind CSS'],
     cover: null,
     images: [
       { src: '/projects/civitas/1.jpeg', width: 1280, height: 665, alt: 'Pantalla de inicio de sesión de Civitas con la marca UDEV' },
@@ -76,39 +77,40 @@ export const projects: Project[] = [
     ],
     links: { repo: 'https://github.com/UDEVIXT/civitas-', caseStudy: '/proyectos/civitas' }
   },
-  {
-    slug: 'euphoria',
-    number: '03',
-    name: 'Salón de Belleza Euphoria',
-    summary: 'Sitio con catálogo, agenda en línea y monedero de puntos para un salón de belleza, conectado a la API de Tiven.',
-    year: '2026 – hoy',
-    role: 'Fullstack (desarrollador único)',
-    featured: true,
-    draft: true,
-    problem: 'El salón no tenía presencia en línea: para conocer servicios o agendar había que llamar, y no existía un programa de lealtad.',
-    decision: 'Frontend en Nuxt con TypeScript que consume la API de Tiven para las citas y el monedero de puntos.',
-    result: null,
-    metric: null,
-    stack: ['NuxtJS', 'Vue.js', 'TypeScript', 'Node.js', 'Tailwind CSS'],
-    cover: null,
-    images: [
-      { src: '/projects/euphoria/1.png', width: 1343, height: 963, alt: 'Portada del sitio de Euphoria con el botón para agendar una cita' },
-      { src: '/projects/euphoria/2.png', width: 1343, height: 963, alt: 'Sección de servicios y equipo del salón Euphoria' },
-      { src: '/projects/euphoria/3.png', width: 1343, height: 963, alt: 'Carrusel de testimonios de clientes en el sitio de Euphoria' },
-      { src: '/projects/euphoria/4.png', width: 1151, height: 970, alt: 'Catálogo de servicios de Euphoria filtrado por categoría, con duración y precio' },
-      { src: '/projects/euphoria/5.png', width: 1140, height: 970, alt: 'Flujo para personalizar una cita en Euphoria: calendario y hora' }
-    ],
-    links: { live: 'https://euphoria-web.pages.dev', caseStudy: '/proyectos/euphoria' }
-  },
+  // Euphoria: oculto por ahora. Para volver a mostrarlo, descomenta el bloque (y renumera).
+  // {
+  //   slug: 'euphoria',
+  //   number: '03',
+  //   name: 'Salón de Belleza Euphoria',
+  //   summary: 'Sitio con catálogo, agenda en línea y monedero de puntos para un salón de belleza, conectado a la API de Tiven.',
+  //   year: '2026 – hoy',
+  //   role: 'Fullstack (desarrollador único)',
+  //   featured: true,
+  //   draft: false,
+  //   problem: 'El salón no tenía presencia en línea: para conocer servicios o agendar había que llamar, y no existía un programa de lealtad.',
+  //   decision: 'Frontend en Nuxt con TypeScript que consume la API de Tiven para las citas y el monedero de puntos.',
+  //   result: null,
+  //   metric: null,
+  //   stack: ['NuxtJS', 'Vue.js', 'TypeScript', 'Node.js', 'Tailwind CSS'],
+  //   cover: null,
+  //   images: [
+  //     { src: '/projects/euphoria/1.png', width: 1343, height: 963, alt: 'Portada del sitio de Euphoria con el botón para agendar una cita' },
+  //     { src: '/projects/euphoria/2.png', width: 1343, height: 963, alt: 'Sección de servicios y equipo del salón Euphoria' },
+  //     { src: '/projects/euphoria/3.png', width: 1343, height: 963, alt: 'Carrusel de testimonios de clientes en el sitio de Euphoria' },
+  //     { src: '/projects/euphoria/4.png', width: 1151, height: 970, alt: 'Catálogo de servicios de Euphoria filtrado por categoría, con duración y precio' },
+  //     { src: '/projects/euphoria/5.png', width: 1140, height: 970, alt: 'Flujo para personalizar una cita en Euphoria: calendario y hora' }
+  //   ],
+  //   links: { live: 'https://euphoria-web.pages.dev', caseStudy: '/proyectos/euphoria' }
+  // },
   {
     slug: 'unistmo-web',
-    number: '04',
+    number: '03',
     name: 'Universidad del Istmo · Sitio web',
     summary: 'Nuevo sitio oficial de la Universidad del Istmo, con contenido que el personal administra sin tocar código.',
     year: '2026 – hoy',
     role: 'Fullstack Developer',
     featured: false,
-    draft: true,
+    draft: false,
     problem: 'El sitio anterior no era responsivo y actualizar contenido dependía del equipo técnico, así que la información quedaba desactualizada.',
     decision: 'Astro (SSG) para velocidad y Strapi como CMS para que el personal publique sin código, desplegado con Docker Compose.',
     result: 'Una versión inicial con mejores tiempos de carga y uso móvil que el sitio anterior, a punto de publicarse como sitio oficial.',
@@ -127,15 +129,15 @@ export const projects: Project[] = [
   },
   {
     slug: 'curvex',
-    number: '05',
+    number: '04',
     name: 'Curvex',
-    summary: 'Aplicación web para cálculos estadísticos y visualización interactiva de distribuciones de probabilidad.',
+    summary: 'Aplicación web para cálculos estadísticos: pruebas de hipótesis, regresiones y distribuciones, con resultados y gráficas al instante.',
     year: '2025 – 2026',
     role: 'Fullstack Developer',
     featured: false,
-    draft: true,
+    draft: false,
     problem: 'Las herramientas estadísticas son complejas (SPSS, R) o son calculadoras sin visualización interactiva de las distribuciones.',
-    decision: 'Cálculos en Laravel y un frontend reactivo en Vue 3 con Inertia para redibujar las gráficas al cambiar los parámetros.',
+    decision: 'Cálculos en Laravel y un frontend reactivo en Vue 3 con Inertia que muestra el modelo, sus métricas y sus gráficas al cambiar los datos.',
     result: 'Compañeros de clase la usaron para validar sus ejercicios de estadística.',
     metric: null,
     stack: ['Laravel', 'PHP', 'Vue.js', 'Tailwind CSS'],
@@ -150,13 +152,13 @@ export const projects: Project[] = [
   },
   {
     slug: 'hecho-en-casa',
-    number: '06',
+    number: '05',
     name: 'Hecho en Casa',
     summary: 'Plataforma de pedidos para una pastelería local.',
     year: '2024 – 2025',
     role: 'Fullstack Developer · líder de equipo',
     featured: false,
-    draft: true,
+    draft: false,
     problem: 'La pastelería tomaba pedidos a mano por WhatsApp o teléfono, con errores y sin seguimiento después de la venta.',
     decision: 'Un monolito en Laravel y Blade con MySQL para que un equipo de 10 colaborara rápido, coordinado con Kanban y GitFlow.',
     result: 'Una plataforma evaluada satisfactoriamente que permitió a la pastelería operar sus pedidos en línea.',

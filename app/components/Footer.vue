@@ -1,87 +1,53 @@
+<script setup>
+import { Github, Linkedin, Mail, Youtube } from 'lucide-vue-next'
+
+const links = [
+  { label: 'GitHub', href: 'https://github.com/JoanGarfias', icon: Github, external: true },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/joangarfias', icon: Linkedin, external: true },
+  { label: 'YouTube', href: 'https://youtube.com/@joan_dev', icon: Youtube, external: true },
+  { label: 'Email', href: 'mailto:joanpagarfk@gmail.com', icon: Mail, external: false }
+]
+</script>
+
 <template>
-  <footer class="bg-surface-0 border-t border-white/5 py-12 relative overflow-hidden">
-    <!-- Decoración de fondo -->
-    <div class="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
-      <div class="absolute -bottom-1/2 -right-1/4 w-[600px] h-[600px] bg-sky-500/10 blur-[120px] rounded-full"></div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        <!-- Columna Marca -->
-        <div class="space-y-6">
-          <div class="flex items-center gap-2">
-            <img src="/logo.svg" alt="" role="presentation" class="w-8 h-8">
-            <span class="text-xl font-bold tracking-tight text-white italic">Joan Garfias</span>
-          </div>
-          <p class="text-slate-300 text-sm leading-relaxed max-w-xs">
-            Construyo software con propósito. Desde Oaxaca, México.
-          </p>
-        </div>
-
-        <!-- Columna Enlaces Rápidos (puedes añadir más tarde) -->
-        <div class="hidden lg:block"></div>
-
-        <!-- Columna Redes Sociales -->
-        <div class="space-y-6 ml-auto md:col-start-2 lg:col-start-4">
-          <h2 class="text-white font-semibold text-sm uppercase tracking-wider">Conectemos</h2>
-          <div class="flex gap-4">
-            <a 
-              href="https://github.com/JoanGarfias" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
-              aria-label="GitHub"
-            >
-              <Github class="w-5 h-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-            </a>
-            <a 
-              href="https://linkedin.com/in/joangarfias" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
-              aria-label="LinkedIn"
-            >
-              <Linkedin class="w-5 h-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-            </a>
-            <a 
-              href="https://youtube.com/@joan_dev" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
-              aria-label="YouTube"
-            >
-              <Youtube class="w-5 h-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-            </a>
-            <a 
-              href="mailto:joanpagarfk@gmail.com" 
-              class="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-900 border border-white/15 text-slate-300 hover:text-cyan-200 hover:border-cyan-300/50 hover:bg-cyan-400/10 transition-all duration-300 group"
-              aria-label="Email"
-            >
-              <Mail class="w-5 h-5 group-hover:scale-110 transition-transform" aria-hidden="true" />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Footer Bottom -->
-      <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div class="text-slate-400 text-xs font-medium flex items-center gap-2">
-          <span>© {{ new Date().getFullYear() }} Joan Garfias.</span>
-          <span class="hidden md:inline text-slate-600" aria-hidden="true">•</span>
-          <span class="flex items-center gap-1 group">
-            Hecho con <Heart class="w-3 h-3 text-red-400" fill="currentColor" aria-hidden="true" /><span class="sr-only">amor</span> en Nuxt & Tailwind.
-          </span>
-        </div>
-        
-      </div>
+  <footer class="site-container mt-10 border-t border-line py-8">
+    <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <p class="text-sm text-ink-muted">
+        © {{ new Date().getFullYear() }} Joan Garfias · Construyo software con propósito desde Oaxaca, México.
+      </p>
+      <ul class="flex gap-2">
+        <li v-for="link in links" :key="link.label">
+          <a
+            :href="link.href"
+            :target="link.external ? '_blank' : undefined"
+            :rel="link.external ? 'noopener noreferrer' : undefined"
+            class="footer-link"
+            :aria-label="link.external ? `${link.label} (abre en otra pestaña)` : link.label"
+          >
+            <component :is="link.icon" class="h-[18px] w-[18px]" aria-hidden="true" />
+          </a>
+        </li>
+      </ul>
     </div>
   </footer>
 </template>
 
-<script setup>
-import { Github, Linkedin, Youtube, Mail, Heart } from 'lucide-vue-next'
-</script>
-
 <style scoped>
-/* Estilos adicionales si fueran necesarios */
+.footer-link {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: var(--surface-1);
+  color: var(--text-strong);
+  transition: background-color 200ms var(--ease-brand), color 200ms var(--ease-brand), transform 200ms var(--ease-brand);
+}
+
+.footer-link:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+}
 </style>

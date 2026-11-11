@@ -1,122 +1,109 @@
 <script setup>
-import { ArrowRight, MapPin } from 'lucide-vue-next'
-import { now } from '~/content/now'
+import { googleAmbassador, nexis } from '~/content/community'
+import { projects } from '~/content/projects'
+import { certifications } from '~/content/stack'
 
-// Retrato temporal: /joan.jpeg existe. Cambia a null para mostrar el PendingSlot.
-const portrait = { src: '/joan.jpeg', width: 1440, height: 1440, alt: 'Retrato de Joan Garfias' }
+// Titular palabra por palabra; las marcadas van bajo el resaltado de marcador
+const lead = ['El', 'software', 'no', 'termina']
+const marked = ['en', 'el', 'código.']
+
+// Cifras que salen de los datos del sitio (no se escriben a mano)
+const { counters } = useCommunity()
+const people = computed(() => counters.value.find(c => c.key === 'personas')?.value ?? 0)
+const stats = computed(() => [
+  { value: projects.length, suffix: '', label: 'Proyectos' },
+  { value: people.value, suffix: '', label: 'Personas alcanzadas' },
+  { value: certifications.length, suffix: 'x', label: 'AWS Certified' }
+])
+
+// Roles en comunidad, con su logo
+const roles = [
+  { label: `${nexis.role} · ${nexis.name}`, logo: '/nexis-green.svg', brand: 'nexis' },
+  { label: googleAmbassador.name, logo: googleAmbassador.logo }
+]
 </script>
 
 <template>
-  <section id="inicio" class="relative overflow-hidden pb-20 pt-32 lg:pt-40">
-    <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
-      <div class="absolute left-[8%] top-[18%] h-72 w-72 rounded-full bg-cyan-400/10 blur-[110px]"></div>
-      <div class="absolute bottom-[8%] right-[4%] h-96 w-96 rounded-full bg-blue-600/10 blur-[130px]"></div>
-      <div class="hero-grid absolute inset-0 opacity-35"></div>
-    </div>
-
-    <div class="site-container relative grid grid-cols-4 gap-x-6 gap-y-12 lg:grid-cols-12 lg:items-end">
-      <div class="col-span-4 lg:col-span-8">
-        <p class="eyebrow mb-8">Backend &amp; Cloud · Desde Oaxaca, México</p>
-
-        <h1 class="display-title uppercase">
-          Construyo<br>
-          <span class="text-ink-title-2">software que resuelve</span><br>
-          <span class="text-gradient">problemas reales.</span>
-        </h1>
-
-        <p class="mt-8 max-w-2xl text-lg leading-8 text-ink-body md:text-xl md:leading-9">
-          Soy Joan, desarrollador de software especializado en backend, cloud e infraestructura.
-          Diseño productos rápidos, mantenibles y preparados para crecer.
-        </p>
-
-        <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <NuxtLink to="/#proyectos" class="button-primary group">
-            Ver proyectos
-            <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-          </NuxtLink>
-          <NuxtLink to="/#contacto" class="button-secondary">Hablemos</NuxtLink>
-        </div>
-
-        <p v-if="now.text || $config.public.showPending" class="now-line mt-8">
-          <span class="text-ink-title-2">Ahora mismo:</span>
-          <span v-if="now.text" class="text-ink-body">{{ now.text }}</span>
-          <PendingText v-else label="qué estoy haciendo hoy (1 línea)" />
-        </p>
+  <section id="inicio" class="pb-16 pt-6 lg:pt-10">
+    <div class="flex items-center gap-3">
+      <img src="/_optimized/joan-480.webp" alt="" width="48" height="48" class="h-12 w-12 rounded-xl border-2 border-surface-1 object-cover shadow-md" />
+      <div>
+        <p class="font-medium leading-tight text-ink-strong">Joan Garfias</p>
+        <p class="font-meta text-[0.8125rem] text-ink-muted">backend · cloud · IA</p>
       </div>
-
-      <figure class="col-span-4 mx-auto w-full max-w-sm sm:max-w-md lg:col-span-4 lg:max-w-none">
-        <div class="portrait">
-          <ProjectImage
-            v-if="portrait"
-            :image="portrait"
-            sizes="(min-width: 1024px) 400px, (min-width: 640px) 448px, 100vw"
-            loading="eager"
-            class="h-full w-full object-cover"
-          />
-          <PendingSlot
-            v-else
-            type="foto"
-            ratio="4/5"
-            label="Retrato principal de Joan (fondo oscuro, luz lateral)"
-            hint="Mín. 1200×1500px, JPG/WebP"
-          />
-        </div>
-
-        <figcaption class="mt-5 flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
-          <span class="status-badge">
-            <span class="relative flex h-2 w-2" aria-hidden="true">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-status opacity-50"></span>
-              <span class="relative inline-flex h-2 w-2 rounded-full bg-status"></span>
-            </span>
-            Disponible para colaborar
-          </span>
-          <span class="flex items-center gap-2 text-sm font-semibold text-ink-body">
-            <MapPin class="h-4 w-4 text-accent" aria-hidden="true" /> Oaxaca, México
-          </span>
-        </figcaption>
-      </figure>
     </div>
+
+    <ul class="mt-5 flex flex-wrap gap-2" aria-label="Roles en comunidad">
+      <li v-for="role in roles" :key="role.label" class="role-chip">
+        <img :src="role.logo" alt="" width="18" height="18" class="h-[18px] w-[18px] object-contain" :class="{ 'role-chip__nexis': role.brand === 'nexis' }" />
+        {{ role.label }}
+      </li>
+    </ul>
+
+    <h1 class="display-title word-reveal mt-10 max-w-[13ch] md:mt-14">
+      <template v-for="(word, i) in lead" :key="word">
+        <span class="word" :style="{ '--i': i }">{{ word }}</span>{{ ' ' }}
+      </template>
+      <span class="marker">
+        <template v-for="(word, i) in marked" :key="word">
+          <span class="word" :style="{ '--i': lead.length + i }">{{ word }}</span>{{ i < marked.length - 1 ? ' ' : '' }}
+        </template>
+      </span>
+    </h1>
+
+    <ScrollReveal :delay="500">
+      <p class="mt-8 max-w-2xl text-lg leading-8 text-ink-body">
+        Soy Joan Garfias, desarrollador de software interesado en backend, cloud e inteligencia artificial. Me gusta aprender construyendo proyectos y descubrir cómo funcionan las cosas más allá del código.
+      </p>
+    </ScrollReveal>
+
+    <div class="mt-14 grid items-end gap-10 md:mt-16 xl:grid-cols-[minmax(0,1fr)_24rem]">
+      <ScrollReveal :delay="650" as="dl" class="stats">
+        <div v-for="stat in stats" :key="stat.label" class="stats__item">
+          <dt class="font-meta text-xs uppercase tracking-[0.12em] text-ink-muted">{{ stat.label }}</dt>
+          <dd class="mt-3 font-display text-5xl font-medium leading-none tracking-tight text-ink-strong md:text-6xl">
+            <CountUp :value="stat.value" />{{ stat.suffix }}
+          </dd>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal :delay="800">
+        <TerminalCard />
+      </ScrollReveal>
+    </div>
+
+    <ScrollReveal :delay="200" class="mt-16 md:mt-20">
+      <StackMarquee />
+    </ScrollReveal>
   </section>
 </template>
 
 <style scoped>
-.hero-grid {
-  background-image: linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 75%, transparent);
-}
-
-.portrait {
-  --pending-radius: var(--radius-feature);
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-feature);
-  background: var(--surface-1);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
-}
-
-.status-badge {
+.role-chip {
   display: inline-flex;
+  min-height: 2.25rem;
   align-items: center;
-  gap: 0.6rem;
-  border: 1px solid rgba(110, 231, 183, 0.3);
-  border-radius: 999px;
-  background: rgba(110, 231, 183, 0.08);
-  padding: 0.45rem 0.85rem;
-  color: var(--green-status);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  gap: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card-sm);
+  background: var(--surface-1);
+  padding: 0.35rem 0.75rem;
+  color: var(--text-strong);
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
-.now-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem 0.5rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.875rem;
-  line-height: 1.6;
+/* Verde de Nexis más claro en tema oscuro para que el ícono pequeño se lea */
+:root[data-theme="dark"] .role-chip__nexis { filter: brightness(1.7); }
+
+/* Cifras separadas por líneas verticales */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stats__item {
+  border-left: 1px solid var(--border-strong);
+  padding: 0.25rem 1rem 0.25rem 1.1rem;
 }
 </style>

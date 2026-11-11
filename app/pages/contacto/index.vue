@@ -1,8 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: 'content'
-})
-
 useHead({
   title: 'Contacto | Joan Garfias',
   meta: [

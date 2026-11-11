@@ -6,13 +6,11 @@ useSeoMeta({
 </script>
 
 <template>
-  <div class="overflow-x-hidden">
+  <div>
     <Hero />
-    <div class="site-container">
-      <ScrollReveal><ProjectGrid /></ScrollReveal>
-    </div>
+    <ProjectGrid />
     <ScrollReveal><AboutMe /></ScrollReveal>
-    <div class="site-container"><CommunitySection /></div>
-    <div class="site-container"><ScrollReveal><Contact /></ScrollReveal></div>
+    <CommunitySection />
+    <ScrollReveal><Contact /></ScrollReveal>
   </div>
 </template>

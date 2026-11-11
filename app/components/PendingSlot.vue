@@ -28,7 +28,7 @@ const isMedia = computed(() => props.type === 'foto' || props.type === 'video')
     :aria-label="`Contenido pendiente: ${props.label}`"
   >
     <div class="pending-slot__inner" aria-hidden="true">
-      <component :is="icons[props.type]" class="h-7 w-7 text-accent-soft" :stroke-width="1.5" />
+      <component :is="icons[props.type]" class="h-7 w-7 text-accent-ink" :stroke-width="1.5" />
       <span class="pending-slot__tag">Pendiente · {{ props.type }}</span>
       <span class="pending-slot__label">{{ props.label }}</span>
       <span v-if="props.hint" class="pending-slot__hint">{{ props.hint }}</span>
@@ -59,7 +59,7 @@ const isMedia = computed(() => props.type === 'foto' || props.type === 'video')
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px dashed rgba(103, 232, 249, 0.45);
+  border: 2px dashed color-mix(in srgb, var(--accent) 45%, transparent);
   background: var(--surface-1);
   container-type: inline-size;
 }
@@ -75,7 +75,7 @@ const isMedia = computed(() => props.type === 'foto' || props.type === 'video')
 }
 
 .pending-slot__tag {
-  color: var(--cyan-soft);
+  color: var(--accent-ink);
   font-family: var(--font-meta);
   font-size: 0.75rem;
   font-weight: 900;
@@ -101,7 +101,7 @@ const isMedia = computed(() => props.type === 'foto' || props.type === 'video')
   justify-content: center;
   border: 1px solid var(--border-subtle);
   background:
-    radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.14), transparent 55%),
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 55%),
     radial-gradient(circle at 80% 90%, rgba(37, 99, 235, 0.14), transparent 50%),
     var(--surface-1);
 }

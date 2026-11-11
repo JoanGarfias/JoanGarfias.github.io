@@ -57,11 +57,11 @@ const playing = ref(false)
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: var(--cyan);
+  background: var(--accent);
   color: var(--on-accent);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
   transition: transform 180ms var(--ease-brand), background-color 180ms var(--ease-brand);
 }
 
-.yt-facade__button:hover .yt-facade__play { transform: scale(1.06); background: var(--cyan-strong); }
+.yt-facade__button:hover .yt-facade__play { transform: scale(1.06); background: var(--accent-strong); }
 </style>
