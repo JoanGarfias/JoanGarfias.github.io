@@ -2,7 +2,7 @@
 
 Contenido que debes aportar o validar. En el sitio, cada hueco se ve como `PENDIENTE · …` (PendingSlot), `[PENDIENTE: …]` (PendingText) o `[BORRADOR – VALIDAR]` (DraftTag).
 
-**Ocultarlos en producción:** compila con `NUXT_PUBLIC_SHOW_PENDING=false`. Las fotos y videos pendientes se reemplazan por el monograma, y los bloques que solo tienen pendientes desaparecen. Ojo: hoy `deploy.yml` no define esa variable, así que en producción **sí se verán** hasta que la agregues al paso `pnpm generate`.
+**Ocultarlos en producción:** compila con `NUXT_PUBLIC_SHOW_PENDING=false`. Las fotos y videos pendientes se reemplazan por el monograma, y los bloques que solo tienen pendientes desaparecen. Ojo: hoy el proyecto `personal-website` de Cloudflare Pages no define esa variable, así que en producción **sí se verán** hasta que la agregues en Settings → Variables and Secrets.
 
 Ordenado por prioridad: hero y comunidad primero.
 
@@ -45,9 +45,9 @@ Ordenado por prioridad: hero y comunidad primero.
 | Tema | Dónde | Qué falta |
 |---|---|---|
 | Correo de contacto | `app/composables/useContact.ts` → `CONTACT_EMAIL` | Confirmar si es `joanpagarfk@gmail.com` (el que estaba en el sitio) u otro. Se usa en Contacto y como alternativa en el error del formulario. El ícono de email del footer (`Footer.vue`) tiene el correo escrito aparte |
-| Formulario | `server/api/contacto.post.ts` (Pages Function en Cloudflare) | Configura los secretos `NUXT_RESEND_API_KEY` y `NUXT_CONTACT_EMAIL` en el proyecto de Cloudflare Pages, y `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` en GitHub Actions. Después apunta `www.joangarfias.me` a Cloudflare Pages y desactiva GitHub Pages |
+| Formulario | `server/api/contacto.post.ts` (Pages Function en Cloudflare) | Configura los secretos `NUXT_RESEND_API_KEY` y `NUXT_CONTACT_EMAIL` en el proyecto `personal-website` de Cloudflare Pages (se despliega desde GitHub con `pnpm run build`; `generate` no incluye la función) |
 | Dominio | DNS del dominio | Confirma que `joangarfias.me` (sin www) apunta a GitHub Pages para que redirija a `www.joangarfias.me`, que es el canonical |
-| Pendientes en producción | `.github/workflows/deploy.yml` | Cuando todo esté listo, agrega `env: NUXT_PUBLIC_SHOW_PENDING: false` al paso `pnpm generate` |
+| Pendientes en producción | Cloudflare Pages (`personal-website`) | Cuando todo esté listo, agrega la variable `NUXT_PUBLIC_SHOW_PENDING=false` y vuelve a desplegar |
 | Fuente display | `app/app.config.ts` → `brandFonts` | Hoy en `false` (fuente del sistema). En `true` usa Space Grotesk + JetBrains Mono; habría que bajar el tracking del titular a unos −0.045em |
 | Divisor de firma | `app/app.config.ts` → `signature` | Hoy en `true`. Pon `false` para quitar la onda de audio de Sobre mí |
 | Certificaciones futuras | `app/content/stack.ts` → `certifications` | Agrega aquí nuevas certificaciones cuando las tengas |
