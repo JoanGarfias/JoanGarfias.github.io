@@ -67,6 +67,10 @@ onBeforeUnmount(() => {
           <ProjectRow :project="project" :dimmed="dimmed(project)" :highlighted="highlighted(project)" />
         </li>
       </ul>
+      <!-- Aclaración de confidencialidad: el trabajo para empresas no se puede mostrar -->
+      <p class="mt-6 max-w-[60ch] text-sm text-soft">
+        Estos son proyectos personales o que tengo permiso de mostrar públicamente. Los proyectos que he desarrollado para otras empresas no aparecen aquí por acuerdos de confidencialidad.
+      </p>
     </div>
 
     <StackBand v-model="activeTech" :level="level" />
