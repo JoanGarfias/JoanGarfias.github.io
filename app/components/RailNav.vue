@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ArrowUp, FileDown, FolderKanban, House, Layers, Moon, Send, Sun, User, Users } from 'lucide-vue-next'
+import { ArrowUp, FileDown, FolderKanban, House, Layers, Moon, Newspaper, Send, Sun, User, Users } from 'lucide-vue-next'
 
-// Mismo orden que las secciones de la home. mobile: false → solo en el rail de escritorio
+// Mismo orden que las secciones de la home (Blog es una página aparte). mobile: false → solo en el rail de escritorio
 const items = [
   { id: 'inicio', label: 'Inicio', href: '/', icon: House },
   { id: 'proyectos', label: 'Proyectos', href: '/#proyectos', icon: FolderKanban },
@@ -15,6 +15,7 @@ const items = [
 const routeToId: [string, string][] = [
   ['/proyectos', 'proyectos'],
   ['/sobre-mi', 'sobre-mi'],
+  ['/blog', 'blog'],
   ['/contacto', 'contacto']
 ]
 
@@ -117,6 +118,13 @@ onBeforeUnmount(() => window.removeEventListener('resize', place))
         <FileDown class="rail__icon" aria-hidden="true" />
         <span class="rail__tip" aria-hidden="true">Descargar CV</span>
       </a>
+
+      <button type="button" class="rail__btn rail__desktop" aria-label="Mi blog">
+        <nuxt-link to="/blog">
+          <Newspaper class="rail__icon" aria-hidden="true" />
+          <span class="rail__tip" aria-hidden="true">Blog</span>
+        </nuxt-link>
+      </button>
 
       <button type="button" class="rail__btn rail__desktop" aria-label="Volver arriba" @click="toTop">
         <ArrowUp class="rail__icon" aria-hidden="true" />
