@@ -13,7 +13,22 @@ export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: '2026-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxt/content', '@nuxt/image'],
+  modules: ['@nuxt/content', '@nuxt/image', 'nuxt-studio'],
+  // Editor visual en /_studio (login con GitHub). Cada publicación es un commit en main y Cloudflare redespliega.
+  // Secretos: NUXT_STUDIO_AUTH_GITHUB_CLIENT_ID y NUXT_STUDIO_AUTH_GITHUB_CLIENT_SECRET (ver .env.example)
+  studio: {
+    // Cloudflare Pages no está entre las plataformas que Studio detecta solas
+    repository: {
+      provider: 'github',
+      owner: 'JoanGarfias',
+      repo: 'personal-website',
+      branch: 'main',
+      // El repo es público: el login pide public_repo en vez de acceso a todos los repos privados
+      private: false
+    },
+    i18n: { defaultLocale: 'es' },
+    git: { commit: { messagePrefix: 'content:' } }
+  },
   content: {
     // node:sqlite (Node ≥ 22.5) evita compilar better-sqlite3, que pnpm bloquea (allowBuilds)
     experimental: { sqliteConnector: 'native' },
@@ -29,6 +44,16 @@ export default defineNuxtConfig({
     }
   },
   hooks: {
+    // El editor de Studio solo lo usa quien inicia sesión: sin prefetch de su bundle (~930 KB) en cada página
+    'build:manifest'(manifest) {
+      const skipPrefetch = (key: string) => {
+        const chunk = manifest[key]
+        if (!chunk || chunk.prefetch === false) return
+        chunk.prefetch = false
+        chunk.imports?.forEach(skipPrefetch)
+      }
+      Object.keys(manifest).filter(key => key.includes('/nuxt-studio/')).forEach(skipPrefetch)
+    },
     // Minutos de lectura de cada post (~200 palabras por minuto, sin contar el frontmatter)
     // y ancho/alto de las imágenes locales del Markdown para reservar su espacio (sin saltos de layout)
     async 'content:file:afterParse'({ file, content, collection }) {
@@ -65,6 +90,9 @@ export default defineNuxtConfig({
   routeRules: {
     // El stack ahora vive dentro de Proyectos
     '/habilidades': { redirect: { to: '/#stack', statusCode: 301 } },
+    // Studio: login y API corren en el worker, nunca como HTML estático
+    '/_studio': { prerender: false },
+    '/__nuxt_studio/**': { prerender: false },
     '/**': { prerender: true }
   },
   css: ['~/assets/css/main.css'],

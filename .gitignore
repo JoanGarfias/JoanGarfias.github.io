@@ -7,3 +7,4 @@ public/_optimized/
 .env
 .wrangler
 .data
+.dev.vars
