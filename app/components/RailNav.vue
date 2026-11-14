@@ -8,6 +8,7 @@ const items = [
   { id: 'stack', label: 'Stack', href: '/#stack', icon: Layers, mobile: false },
   { id: 'sobre-mi', label: 'Sobre mí', href: '/#sobre-mi', icon: User },
   { id: 'comunidad', label: 'Comunidad', href: '/#comunidad', icon: Users },
+  { id: 'blog', label: 'Blog', href: '/blog', icon: Newspaper },
   { id: 'contacto', label: 'Contacto', href: '/#contacto', icon: Send }
 ]
 
@@ -118,13 +119,6 @@ onBeforeUnmount(() => window.removeEventListener('resize', place))
         <FileDown class="rail__icon" aria-hidden="true" />
         <span class="rail__tip" aria-hidden="true">Descargar CV</span>
       </a>
-
-      <button type="button" class="rail__btn rail__desktop" aria-label="Mi blog">
-        <nuxt-link to="/blog">
-          <Newspaper class="rail__icon" aria-hidden="true" />
-          <span class="rail__tip" aria-hidden="true">Blog</span>
-        </nuxt-link>
-      </button>
 
       <button type="button" class="rail__btn rail__desktop" aria-label="Volver arriba" @click="toTop">
         <ArrowUp class="rail__icon" aria-hidden="true" />
