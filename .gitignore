@@ -6,3 +6,4 @@ dist/
 public/_optimized/
 .env
 .wrangler
+.data

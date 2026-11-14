@@ -13,6 +13,55 @@ export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: '2026-04-03',
   devtools: { enabled: true },
+  modules: ['@nuxt/content', '@nuxt/image'],
+  content: {
+    // node:sqlite (Node ≥ 22.5) evita compilar better-sqlite3, que pnpm bloquea (allowBuilds)
+    experimental: { sqliteConnector: 'native' },
+    build: {
+      markdown: {
+        // Bloques de código con los dos temas; main.css elige según data-theme
+        highlight: {
+          theme: { default: 'github-light', dark: 'github-dark' },
+          langs: ['ts', 'js', 'vue', 'bash', 'json', 'php', 'python', 'sql', 'yaml', 'diff']
+        },
+        toc: { depth: 3, searchDepth: 3 }
+      }
+    }
+  },
+  hooks: {
+    // Minutos de lectura de cada post (~200 palabras por minuto, sin contar el frontmatter)
+    // y ancho/alto de las imágenes locales del Markdown para reservar su espacio (sin saltos de layout)
+    async 'content:file:afterParse'({ file, content, collection }) {
+      if (collection.name !== 'blog' || typeof file.body !== 'string') return
+      const words = file.body.replace(/^---[\s\S]*?---/, '').split(/\s+/).filter(Boolean).length
+      content.readingTime = Math.max(1, Math.round(words / 200))
+
+      const { default: sharp } = await import('sharp')
+      // Nodos minimark: [tag, props, ...hijos]
+      const visit = async (node: unknown): Promise<void> => {
+        if (!Array.isArray(node)) return
+        const [tag, props] = node as [string, Record<string, unknown>]
+        if (tag === 'img' && typeof props?.src === 'string' && props.src.startsWith('/') && !props.width) {
+          const meta = await sharp(`public${props.src}`).metadata().catch(() => null)
+          if (meta?.width && meta.height) Object.assign(props, { width: meta.width, height: meta.height })
+        }
+        for (const child of node.slice(2)) await visit(child)
+      }
+      const body = content.body as { value?: unknown[] } | undefined
+      for (const node of body?.value ?? []) await visit(node)
+    }
+  },
+  image: {
+    // En cloudflare-pages Nuxt Image elegiría 'none': ipxStatic optimiza durante el prerender
+    // y escribe /_ipx/* como archivos estáticos (sin sharp en el worker)
+    provider: 'ipxStatic',
+    format: ['avif', 'webp'],
+    quality: 75
+  },
+  // ipxStatic no sirve /_ipx en dev: ahí se usa ipx (sharp al vuelo)
+  $development: {
+    image: { provider: 'ipx' }
+  },
   routeRules: {
     // El stack ahora vive dentro de Proyectos
     '/habilidades': { redirect: { to: '/#stack', statusCode: 301 } },
@@ -77,7 +126,8 @@ export default defineNuxtConfig({
     preset: 'cloudflare-pages',
     prerender: {
       crawlLinks: true,
-      routes: ['/', '/proyectos', '/habilidades', '/sobre-mi', '/contacto', ...projectRoutes]
+      // Los posts entran por crawlLinks desde /blog (los draft no se enlazan, así que no se generan)
+      routes: ['/', '/proyectos', '/habilidades', '/sobre-mi', '/contacto', '/blog', '/blog/rss.xml', ...projectRoutes]
     }
   },
   experimental: {
