@@ -412,3 +412,94 @@ section[id],
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Prosa de los posts del blog (ContentRenderer). Misma tipografía que los casos de estudio */
+.prose-site {
+  color: var(--text-body);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.prose-site > * + * { margin-top: 1.25rem; }
+
+.prose-site h2,
+.prose-site h3 {
+  scroll-margin-top: 2rem;
+  color: var(--text-strong);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.prose-site h2 { margin-top: 3rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.prose-site h3 { margin-top: 2.25rem; font-size: 1.3rem; }
+.prose-site h2 + *,
+.prose-site h3 + * { margin-top: 0.85rem; }
+.prose-site :is(h2, h3) a { color: inherit; text-decoration: none; }
+
+.prose-site p a,
+.prose-site li a {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose-site strong { color: var(--text-strong); font-weight: 600; }
+
+.prose-site ul,
+.prose-site ol { display: grid; gap: 0.5rem; padding-left: 1.3rem; }
+.prose-site ul { list-style: disc; }
+.prose-site ol { list-style: decimal; }
+.prose-site li::marker { color: var(--accent-ink); }
+
+.prose-site blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.prose-site hr { border: 0; border-top: 1px solid var(--border-subtle); margin-block: 2.5rem; }
+
+.prose-site :not(pre) > code {
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  background: var(--surface-2);
+  padding: 0.1rem 0.35rem;
+  color: var(--text-strong);
+  font-family: var(--font-meta);
+  font-size: 0.875em;
+}
+
+.prose-site pre {
+  overflow-x: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  background: var(--surface-1);
+  padding: 1.1rem 1.25rem;
+  font-family: var(--font-meta);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Shiki con dos temas: por defecto el claro; con data-theme="dark" el oscuro */
+.prose-site pre span { color: var(--shiki-default); }
+:root[data-theme="dark"] .prose-site pre span { color: var(--shiki-dark); }
+
+.prose-site table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.prose-site :is(th, td) { border-bottom: 1px solid var(--border-subtle); padding: 0.6rem 0.75rem; text-align: left; }
+.prose-site th { color: var(--text-strong); font-weight: 600; }
+
+.prose-site picture.prose-img,
+.prose-site img.prose-img { display: block; }
+
+.prose-site .prose-img img,
+.prose-site img.prose-img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+}
