@@ -11,7 +11,7 @@ tags:
   - notas
 ---
 
-Este es el primer post del blog. La idea es tener un lugar para escribir con más calma lo que aprendo construyendo software: decisiones de backend, cloud y lo que sale bien (y mal) en proyectos reales. Prueba.
+Este es el primer post del blog. La idea es tener un lugar para escribir con más calma lo que aprendo construyendo software: decisiones de backend, cloud y lo que sale bien (y mal) en proyectos reales.
 
 ## Cómo está hecho
 
@@ -22,7 +22,7 @@ El blog vive dentro del mismo portafolio, en `/blog`. No hay base de datos ni un
 - **Cloudflare Pages** publica todo como HTML estático; solo el formulario de contacto corre como función.
 - **Nuxt Studio** permite editar y publicar desde el navegador: cada publicación es un commit.
 
-![Gráfica de barras que crece de izquierda a derecha bajo el título “Nuxt Content → HTML estático”](/images/blog/hola-mundo/build.png){width="1600" height="1000"}
+![Gráfica de barras que crece de izquierda a derecha bajo el título “Nuxt Content → HTML estático”](/images/blog/hola-mundo/build.png){height="1000" width="1600"}
 
 ## Un post por dentro
 
